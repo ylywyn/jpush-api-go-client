@@ -20,7 +20,7 @@ const jsons = `{
 
 func main() {
 
-	//PlatForm
+	//Platform
 	var pf push.Platform
 	//pf.Add(push.ANDROID)
 	pf.All()
