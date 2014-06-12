@@ -21,7 +21,7 @@ const jsons = `{
 func main() {
 
 	//PlatForm
-	var pf push.PlatForm
+	var pf push.Platform
 	//pf.Add(push.ANDROID)
 	pf.All()
 
@@ -38,24 +38,21 @@ func main() {
 
 	var msg push.Message
 	msg.Title = "Hello"
-	msg.Content = " 祝大家工作顺利55"
+	msg.Content = "祝大家工作顺利"
 
 	//NoticeBuilder
-	//var nb = push.NewNoticeBuilder()
-	//nb.SetPlatForm(&pf)
+	//nb := push.NewNoticeBuilder()
+	//nb.SetPlatform(&pf)
 	//nb.SetAudience(&ad)
+	//nb.SetSimpleNotice("简单通知")
 	//nb.SetAndroidNotice(&notice)
-	//nb.SetSimpleNotice("哈哈")
 
 	mb := push.NewMessageBuilder()
-	mb.SetPlatForm(&pf)
+	mb.SetPlatform(&pf)
 	mb.SetAudience(&ad)
 	mb.SetMessage(&msg)
 
-	//to json
-	//body, _ := json.Marshal(mb)
-	//fmt.Printf("ok : %s", string(body))
-	////push
+	//push
 	c := push.NewPushClient(secret, appKey)
 	str, err := c.Send(mb)
 	if err != nil {

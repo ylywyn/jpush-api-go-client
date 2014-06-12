@@ -6,15 +6,15 @@ const (
 	WINPHONE = "winphone"
 )
 
-type PlatForm struct {
+type Platform struct {
 	Object interface{}
 }
 
-func (this *PlatForm) All() {
+func (this *Platform) All() {
 	this.Object = "all"
 }
 
-func (this *PlatForm) Add(os string) {
+func (this *Platform) Add(os string) {
 
 	if this.Object == nil {
 		s := []string{os}

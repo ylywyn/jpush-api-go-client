@@ -38,7 +38,7 @@ func (this *MessageBuilder) SetMessage(m *Message) {
 	this.Message = m
 }
 
-func (this *MessageBuilder) SetPlatForm(pf *PlatForm) {
+func (this *MessageBuilder) SetPlatform(pf *Platform) {
 	this.Platform = pf.Object
 }
 
@@ -67,7 +67,7 @@ func (this *NoticeBuilder) SetAndroidNotice(notice *AndroidNotice) {
 	this.Notification = notice
 }
 
-func (this *NoticeBuilder) SetPlatForm(pf *PlatForm) {
+func (this *NoticeBuilder) SetPlatform(pf *Platform) {
 	this.Platform = pf.Object
 }
 
@@ -87,7 +87,7 @@ func NewMessageAndNoticeBuilder() *MessageAndNoticeBuilder {
 	return mnb
 }
 
-func (this *MessageAndNoticeBuilder) SetPlatForm(pf *PlatForm) {
+func (this *MessageAndNoticeBuilder) SetPlatform(pf *Platform) {
 	this.Platform = pf.Object
 }
 
