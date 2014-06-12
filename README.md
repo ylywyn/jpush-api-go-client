@@ -14,8 +14,8 @@ jpush-api-go-client
    
 推送流程  
 ----------------------------------- 
-### 1.构建要推送的平台： push.PlatForm
-      var pf push.PlatForm
+### 1.构建要推送的平台： push.Platform
+      var pf push.Platform
       //pf.Add(push.ANDROID)
       pf.All
       
