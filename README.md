@@ -51,7 +51,7 @@ jpush-api-go-client
       mb.SetAudience(&ad)
       mb.SetMessage(&msg)
       
-### 5.构建PushClient， 发出推送
+### 5.构建PushClient，发出推送
       c := push.NewPushClient(secret, appKey)
       str, err := c.Send(nb)
       //str, err := c.Send(mb)
