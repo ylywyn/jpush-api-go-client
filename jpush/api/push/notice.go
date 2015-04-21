@@ -9,10 +9,10 @@ type AndroidNotice struct {
 }
 
 type NoticeAndroid struct {
-	Alert     string `json:"alert"`
-	Title     string `json:"title"`
-	BuilderId int    `json:"builder_id"`
-	//Extras    map[string]string `json:"extras"`
+	Alert     string                 `json:"alert"`
+	Title     string                 `json:"title"`
+	BuilderId int                    `json:"builder_id"`
+	Extras    map[string]interface{} `json:"extras"`
 }
 
 func (this *AndroidNotice) SetAlert(alert string) {
@@ -28,9 +28,9 @@ func (this *AndroidNotice) SetBuilderId(id int) {
 	this.Object.BuilderId = id
 }
 
-//func (this *AndroidNotice) AddExtras(key, value string) {
-//	if this.notice.Extras == nil {
-//		this.notice.Extras = make(map[string]string)
-//	}
-//	this.notice.Extras[key] = value
-//}
+func (this *AndroidNotice) AddExtras(key string, value interface{}) {
+	if this.Object.Extras == nil {
+		this.Object.Extras = make(map[string]interface{})
+	}
+	this.Object.Extras[key] = value
+}

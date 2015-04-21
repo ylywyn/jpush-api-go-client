@@ -35,6 +35,7 @@ func main() {
 	var notice push.AndroidNotice
 	notice.SetAlert("alert_test")
 	notice.SetTitle("title_test")
+	notice.AddExtras("alarm", 1)
 
 	var msg push.Message
 	msg.Title = "Hello"
