@@ -58,5 +58,5 @@ jpush-api-go-client
 
   
 ### 6.未完成
-      未完成ios和winphone 通知，以及不支持extras扩展字段。
+      未完成ios和winphone 通知。
 
