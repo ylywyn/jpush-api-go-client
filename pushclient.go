@@ -9,6 +9,7 @@ import (
 const (
 	SUCCESS_FLAG  = "msg_id"
 	HOST_NAME_SSL = "https://api.jpush.cn/v3/push"
+	HOST_CREATE_SCHEDULE = "https://api.jpush.cn/v3/schedules"
 	BASE64_TABLE  = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 )
 
@@ -28,8 +29,20 @@ func NewPushClient(secret, appKey string) *PushClient {
 	return pusher
 }
 
+func NewSchedulePushClient(secret, appKey string) *PushClient{
+	// auth :=	"Basic " + base64.StdEncoding.EncodeToString([]byte(appKey+":"+secret))
+		auth := "Basic " + base64Coder.EncodeToString([]byte(appKey+":"+secret))
+
+	pusher := &PushClient{MasterSecret:secret, AppKey:appKey, AuthCode:auth}
+	return pusher
+}
+
 func (this *PushClient) Send(data []byte) (string, error) {
 	return this.SendPushBytes(data)
+}
+func (this *PushClient) CreateSchedule(data []byte) (string, error) {
+	this.BaseUrl = HOST_CREATE_SCHEDULE
+	return this.SendScheduleBytes(data)
 }
 
 func (this *PushClient) SendPushString(content string) (string, error) {
@@ -56,3 +69,18 @@ func (this *PushClient) SendPushBytes(content []byte) (string, error) {
 		return "", errors.New(ret)
 	}
 }
+
+
+func (this *PushClient) SendScheduleBytes(content []byte) (string, error) {
+	ret, err := SendPostBytes2(this.BaseUrl, content, this.AuthCode)
+	if err != nil {
+		return ret, err
+	}
+	if strings.Contains(ret, "schedule_id") {
+		return ret, nil
+	} else {
+		return "", errors.New(ret)
+	}
+
+}
+
