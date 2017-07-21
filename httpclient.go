@@ -69,3 +69,4 @@ func SendPostBytes2(url string, data []byte, authCode string) (string, error) {
 	}
 	return string(r), nil
 }
+

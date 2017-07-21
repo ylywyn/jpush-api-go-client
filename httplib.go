@@ -50,6 +50,11 @@ func (b *HttpRequest) SetTimeout(connectTimeout, readWriteTimeout time.Duration)
 	return b
 }
 
+func (b *HttpRequest) SetBasicAuth(userName, password string) *HttpRequest {
+	b.req.SetBasicAuth(userName, password)
+	return b
+}
+
 // SetTLSClientConfig sets tls connection configurations if visiting https url.
 func (b *HttpRequest) SetTLSClientConfig(config *tls.Config) *HttpRequest {
 	b.tlsClientConfig = config
