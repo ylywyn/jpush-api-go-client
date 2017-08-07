@@ -31,6 +31,13 @@ func Post(url string) *HttpRequest {
 	return &HttpRequest{url, &req, map[string]string{}, 60 * time.Second, 60 * time.Second, nil, nil, nil}
 }
 
+func Delete(url string) *HttpRequest {
+	var req http.Request
+	req.Method = "DELETE"
+	req.Header = http.Header{}
+	return &HttpRequest{url, &req, map[string]string{}, 60 * time.Second, 60 * time.Second, nil, nil, nil}
+}
+
 // HttpRequest provides more useful methods for requesting one url than http.Request.
 type HttpRequest struct {
 	url              string
