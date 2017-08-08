@@ -32,16 +32,16 @@ func NewPushClient(secret, appKey string) *PushClient {
 	return pusher
 }
 
-func NewSchedulePushClient(secret, appKey string) *PushClient {
-	auth := "Basic " + base64Coder.EncodeToString([]byte(appKey+":"+secret))
-	pusher := &PushClient{MasterSecret: secret, AppKey: appKey, AuthCode: auth}
-	return pusher
-}
-func NewReportClient(secret, appKey string) *PushClient {
-	auth := "Basic " + base64Coder.EncodeToString([]byte(appKey+":"+secret))
-	pusher := &PushClient{MasterSecret: secret, AppKey: appKey, AuthCode: auth}
-	return pusher
-}
+// func NewSchedulePushClient(secret, appKey string) *PushClient {
+// 	auth := "Basic " + base64Coder.EncodeToString([]byte(appKey+":"+secret))
+// 	pusher := &PushClient{MasterSecret: secret, AppKey: appKey, AuthCode: auth}
+// 	return pusher
+// }
+// func NewReportClient(secret, appKey string) *PushClient {
+// 	auth := "Basic " + base64Coder.EncodeToString([]byte(appKey+":"+secret))
+// 	pusher := &PushClient{MasterSecret: secret, AppKey: appKey, AuthCode: auth}
+// 	return pusher
+// }
 
 func (this *PushClient) Send(data []byte) (string, error) {
 	return this.SendPushBytes(data)
