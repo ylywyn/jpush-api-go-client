@@ -32,17 +32,6 @@ func NewPushClient(secret, appKey string) *PushClient {
 	return pusher
 }
 
-// func NewSchedulePushClient(secret, appKey string) *PushClient {
-// 	auth := "Basic " + base64Coder.EncodeToString([]byte(appKey+":"+secret))
-// 	pusher := &PushClient{MasterSecret: secret, AppKey: appKey, AuthCode: auth}
-// 	return pusher
-// }
-// func NewReportClient(secret, appKey string) *PushClient {
-// 	auth := "Basic " + base64Coder.EncodeToString([]byte(appKey+":"+secret))
-// 	pusher := &PushClient{MasterSecret: secret, AppKey: appKey, AuthCode: auth}
-// 	return pusher
-// }
-
 func (this *PushClient) Send(data []byte) (string, error) {
 	return this.SendPushBytes(data)
 }
@@ -53,6 +42,12 @@ func (this *PushClient) CreateSchedule(data []byte) (string, error) {
 func (this *PushClient) DeleteSchedule(id string) (string, error) {
 	this.BaseUrl = HOST_SCHEDULE
 	return this.SendDeleteScheduleRequest(id)
+}
+func (this *PushClient) GetSchedule(id string) (string, error) {
+	// GET https://api.jpush.cn/v3/schedules/{schedule_id}
+	this.BaseUrl = HOST_SCHEDULE
+	return this.SendGetScheduleRequest(id)
+
 }
 func (this *PushClient) GetReport(msg_ids string) (string, error) {
 	this.BaseUrl = HOST_REPORT
@@ -98,7 +93,6 @@ func (this *PushClient) SendScheduleBytes(content []byte) (string, error) {
 
 func (this *PushClient) SendGetReportRequest(msg_ids string) (string, error) {
 	return Get(this.BaseUrl).SetBasicAuth(this.AppKey, this.MasterSecret).Param("msg_ids", msg_ids).String()
-
 }
 
 func UnmarshalResponse(rsp string) (map[string]interface{}, error) {
@@ -118,6 +112,17 @@ func UnmarshalResponse(rsp string) (map[string]interface{}, error) {
 
 func (this *PushClient) SendDeleteScheduleRequest(schedule_id string) (string, error) {
 	rsp, err := Delete(strings.Join([]string{this.BaseUrl, schedule_id}, "/")).Header("Authorization", this.AuthCode).String()
+	if err != nil {
+		return "", err
+	}
+	_, err = UnmarshalResponse(rsp)
+	if err != nil {
+		return "", err
+	}
+	return rsp, nil
+}
+func (this *PushClient) SendGetScheduleRequest(schedule_id string) (string, error) {
+	rsp, err := Get(strings.Join([]string{this.BaseUrl, schedule_id}, "/")).Header("Authorization", this.AuthCode).String()
 	if err != nil {
 		return "", err
 	}
