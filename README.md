@@ -62,8 +62,24 @@ jpush-api-go-client
 		fmt.Printf("ok:%s", r)
 	}
 
-  
-### 6.完整demo
+
+### 6.构建定时消息
+    var schdule jpushclient.Schedule
+    schedule.SetName("定时任务")
+	schedule.SetEnabled(true)
+	schedule.SetSingleSchedule("2018-01-22 18:08:00")
+	schedule.SetPayload(payload)
+    
+### 7.发送定时消息
+    c := jpushclient.NewPushClient(secret, appKey)
+    str , err := c.SetSchedule(bytes)
+	if err != nil {
+		fmt.Printf("err:%s", err.Error())
+	} else {
+		fmt.Printf("ok:%s", r)
+	}
+
+### 8.完整demo
     package main
 
 	import (
@@ -121,5 +137,22 @@ jpush-api-go-client
 		} else {
 			fmt.Printf("ok:%s", str)
 		}
+        
+        
+        // schdule
+        var schdule jpushclient.Schedule
+        schedule.SetName("定时任务")
+	    schedule.SetEnabled(true)
+	    schedule.SetSingleSchedule("2018-01-22 18:08:00")
+	    schedule.SetPayload(payload)
+        
+        bytes , _ = payload.ToBytes()
+        str , err = c.SetSchedule(bytes)
+	    if err != nil {
+		    fmt.Printf("err:%s", err.Error())
+	    } else {
+		    fmt.Printf("ok:%s", r)
+	    }
+        
 	}
 

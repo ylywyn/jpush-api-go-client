@@ -33,12 +33,16 @@ type Schedule struct {
 	Push    *PayLoad `json:"push"`
 }
 
-
-func (this *Schedule) New (cid, name string, enabled bool) Schedule {
+func (this *Schedule)SetCid( cid string ) {
 	this.Cid = cid
+}
+
+func (this *Schedule) SetName( name string ) {
 	this.Name = name
+}
+
+func (this *Schedule) SetEnabled( enabled bool ) {
 	this.Enabled = enabled
-	return *this
 }
 
 

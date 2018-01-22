@@ -67,7 +67,7 @@ func (this *PushClient) SetSchedule(content []byte) (string, error) {
 		return ret, err
 	}
 
-	if strings.Contains(ret, "msg_id") {
+	if strings.Contains(ret, "schedule_id") {
 		return ret, nil
 	} else {
 		return "", errors.New(ret)
