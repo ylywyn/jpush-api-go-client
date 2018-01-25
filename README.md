@@ -68,7 +68,16 @@ jpush-api-go-client
     schedule.SetName("定时任务")
 	schedule.SetEnabled(true)
 	schedule.SetSingleSchedule("2018-01-22 18:08:00")
-	schedule.SetPayload(payload)
+    
+	periodical := &jpushclient.Periodical{
+		Start: "2018-01-25 16:50:00",
+		End: "2018-01-26 16:50:00",
+		Time: "17:22:00",
+		Time_unit: "day",
+		Frequency: 1,
+	}
+	schedule.SetPeriodicalSchedule(periodical)
+    schedule.SetPayload(payload)
     
 ### 7.发送定时消息
     c := jpushclient.NewPushClient(secret, appKey)
@@ -144,6 +153,15 @@ jpush-api-go-client
         schedule.SetName("定时任务")
 	    schedule.SetEnabled(true)
 	    schedule.SetSingleSchedule("2018-01-22 18:08:00")
+        
+	    periodical := &jpushclient.Periodical{
+		    Start: "2018-01-25 16:50:00",
+		    End: "2018-01-26 16:50:00",
+		    Time: "17:22:00",
+		    Time_unit: "day",
+		    Frequency: 1,
+	    }
+	    schedule.SetPeriodicalSchedule(periodical)
 	    schedule.SetPayload(payload)
         
         bytes , _ = payload.ToBytes()
