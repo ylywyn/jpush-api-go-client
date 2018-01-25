@@ -16,7 +16,7 @@ type Periodical struct {
 	Time      string   `json:"time"`
 	Time_unit string   `json:"time_unit"`
 	Frequency int	   `json:"frequency"`
-	Point     []string `json:"point"`   
+	Point     []string `json:"point,omitempty"`   
 	
 }
 
@@ -53,8 +53,24 @@ func (this *Schedule) SetPayload( payload *PayLoad ) {
 
 func (this *Schedule) SetSingleSchedule ( time string ) {
 	single := &Single{ Time:time }
-	trigger := &Trigger{ Single:single }
-	this.Trigger = trigger	
+
+	if this.Trigger == nil {
+		trigger := &Trigger{ Single:single }
+		this.Trigger = trigger
+	} else {
+		this.Trigger.Single = single
+	}
+
+}
+
+func (this *Schedule) SetPeriodicalSchedule ( periodical *Periodical) {
+
+	if this.Trigger == nil {
+		trigger := &Trigger{Periodical:periodical}
+		this.Trigger = trigger
+	} else {
+		this.Trigger.Periodical = periodical
+	}	
 }
 
 
