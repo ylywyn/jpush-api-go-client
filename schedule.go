@@ -6,14 +6,16 @@ import (
 )
 
 type Schedule struct {
+	Cid		string				   `json:"cid"`
 	Name    string                 `json:"name"`
 	Enabled bool                   `json:"enabled"`
 	Trigger map[string]interface{} `json:"trigger"`
 	Push    *PayLoad               `json:"push"`
 }
 
-func NewSchedule(name string, enabled bool, push *PayLoad) *Schedule {
+func NewSchedule(name,cid string, enabled bool, push *PayLoad) *Schedule {
 	return &Schedule{
+		Cid:	cid,
 		Name:    name,
 		Enabled: enabled,
 		Push:    push,
