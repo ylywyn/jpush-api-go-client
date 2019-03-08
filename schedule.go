@@ -32,7 +32,7 @@ func (s *Schedule) PeriodicalTrigger(start time.Time, end time.Time, time time.T
 	s.Trigger = map[string]interface{}{
 		"periodical": map[string]interface{}{
 			"start":     start.Format("2006-01-02 15:04:05"),
-			"end":       start.Format("2006-01-02 15:04:05"),
+			"end":       end.Format("2006-01-02 15:04:05"),
 			"time":      start.Format("15:04:05"),
 			"time_unit": timeUnit,
 			"frequency": frequency,
