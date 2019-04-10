@@ -33,8 +33,8 @@ func (this *Audience) SetAlias(alias []string) {
 }
 
 func (this *Audience) set(key string, v []string) {
-	if this.Object == nil {
-		this.audience = map[string][]string{key: v}
+	if this.audience == nil {
+		this.audience = make(map[string][]string)
 		this.Object = this.audience
 	}
 
