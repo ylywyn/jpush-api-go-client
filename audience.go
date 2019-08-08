@@ -3,8 +3,11 @@ package jpushclient
 const (
 	TAG     = "tag"
 	TAG_AND = "tag_and"
+	TAG_NOT = "tag_not"
 	ALIAS   = "alias"
 	ID      = "registration_id"
+	SEGMENT = "segment"
+	ABTEST  = "abtest"
 )
 
 type Audience struct {
@@ -28,8 +31,20 @@ func (this *Audience) SetTagAnd(tags []string) {
 	this.set(TAG_AND, tags)
 }
 
+func (this *Audience) SetTagNot(tags []string) {
+	this.set(TAG_NOT, tags)
+}
+
 func (this *Audience) SetAlias(alias []string) {
 	this.set(ALIAS, alias)
+}
+
+func (this *Audience) SetSegment(segIDs []string) {
+	this.set(SEGMENT, segIDs)
+}
+
+func (this *Audience) SetABTest(testIDs []string) {
+	this.set(ABTEST, testIDs)
 }
 
 func (this *Audience) set(key string, v []string) {
