@@ -25,7 +25,7 @@ func (this *Platform) Add(os string) error {
 	} else {
 		switch this.Os.(type) {
 		case string:
-			panic("platform is all")
+			return errors.New("platform is all")
 		default:
 		}
 	}
