@@ -9,7 +9,7 @@ jpush-api-go-client
 
 使用  
 ----------------------------------- 
-   go get github.com/ylywyn/jpush-api-go-client
+   go get github.com/swordkee/jpush-api-go-client
    
    
 推送流程  
@@ -38,24 +38,26 @@ jpush-api-go-client
 	notice.SetAlert("alert_test")
 	notice.SetAndroidNotice(&jpushclient.AndroidNotice{Alert: "AndroidNotice"})
 	notice.SetIOSNotice(&jpushclient.IOSNotice{Alert: "IOSNotice"})
+	notice.SetQuickAppNotice(&QuickAppNotice{Alert: "QuickAppNotice",Title: "test",Page: "url"})
 	notice.SetWinPhoneNotice(&jpushclient.WinPhoneNotice{Alert: "WinPhoneNotice"})
       
     //jpushclient.Message
     var msg jpushclient.Message
 	msg.Title = "Hello"
-	msg.Content = "你是ylywn"
+	msg.MsgContent = "test"
       
 ### 4.构建jpushclient.PayLoad
-    payload := jpushclient.NewPushPayLoad()
-	payload.SetPlatform(&pf)
-	payload.SetAudience(&ad)
-	payload.SetMessage(&msg)
-	payload.SetNotice(&notice)
+    req := NewPushRequest()
+	req.SetPlatform(&pf)
+	req.SetAudience(&ad)
+	req.SetMessage(&msg)
+	req.SetNotice(&notice)
+	req.SetOptions(&op)
       
       
 ### 5.构建PushClient，发出推送
-	c := jpushclient.NewPushClient(secret, appKey)
-	r, err := c.Send(bytes)
+	client := jpushclient.NewClient(secret, appKey)
+	result, err := client.Push(req)
 	if err != nil {
 		fmt.Printf("err:%s", err.Error())
 	} else {
@@ -68,7 +70,7 @@ jpush-api-go-client
 
 	import (
 		"fmt"
-		"github.com/ylywyn/jpush-api-go-client"
+		"github.com/swordkee/jpush-api-go-client"
 	)
 
 	const (
@@ -82,6 +84,7 @@ jpush-api-go-client
 		var pf jpushclient.Platform
 		pf.Add(jpushclient.ANDROID)
 		pf.Add(jpushclient.IOS)
+            pf.Add(jpushclient.QUICKAPP)
 		pf.Add(jpushclient.WINPHONE)
 		//pf.All()
 
@@ -89,6 +92,7 @@ jpush-api-go-client
 		var ad jpushclient.Audience
 		s := []string{"1", "2", "3"}
 		ad.SetTag(s)
+            ad.SetTagAnd(s)
 		ad.SetAlias(s)
 		ad.SetID(s)
 		//ad.All()
@@ -98,28 +102,30 @@ jpush-api-go-client
 		notice.SetAlert("alert_test")
 		notice.SetAndroidNotice(&jpushclient.AndroidNotice{Alert: "AndroidNotice"})
 		notice.SetIOSNotice(&jpushclient.IOSNotice{Alert: "IOSNotice"})
+            notice.SetQuickAppNotice(&QuickAppNotice{Alert: "QuickAppNotice",Title: "test",Page: "url"})
 		notice.SetWinPhoneNotice(&jpushclient.WinPhoneNotice{Alert: "WinPhoneNotice"})
 
 		var msg jpushclient.Message
 		msg.Title = "Hello"
-		msg.Content = "你是ylywn"
+		msg.MsgContent = "test"
 
-		payload := jpushclient.NewPushPayLoad()
-		payload.SetPlatform(&pf)
-		payload.SetAudience(&ad)
-		payload.SetMessage(&msg)
-		payload.SetNotice(&notice)
+		req := NewPushRequest()
+            req.SetPlatform(&pf)
+	        req.SetAudience(&ad)
+	        req.SetMessage(&msg)
+	        req.SetNotice(&notice)
+            req.SetOptions(&op)
 
-		bytes, _ := payload.ToBytes()
+		bytes, _ := req.ToBytes()
 		fmt.Printf("%s\r\n", string(bytes))
 
 		//push
-		c := jpushclient.NewPushClient(secret, appKey)
-		str, err := c.Send(bytes)
+		c := jpushclient.NewClient(secret, appKey)
+		result, err := c.Push(req)
 		if err != nil {
 			fmt.Printf("err:%s", err.Error())
 		} else {
-			fmt.Printf("ok:%s", str)
+			fmt.Printf("ok:%s", result)
 		}
 	}
 
