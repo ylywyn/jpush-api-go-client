@@ -8,6 +8,7 @@ const (
 	IOS      = "ios"
 	ANDROID  = "android"
 	WINPHONE = "winphone"
+	QUICKAPP = "quickapp"
 )
 
 type Platform struct {
@@ -42,6 +43,8 @@ func (this *Platform) Add(os string) error {
 		fallthrough
 	case ANDROID:
 		fallthrough
+	case QUICKAPP:
+		fallthrough
 	case WINPHONE:
 		this.osArry = append(this.osArry, os)
 		this.Os = this.osArry
@@ -56,10 +59,14 @@ func (this *Platform) AddIOS() {
 	this.Add(IOS)
 }
 
-func (this *Platform) AddAndrid() {
+func (this *Platform) AddAndroid() {
 	this.Add(ANDROID)
 }
 
-func (this *Platform) AddWinphone() {
+func (this *Platform) AddWinPhone() {
 	this.Add(WINPHONE)
+}
+
+func (this *Platform) AddQuickApp() {
+	this.Add(QUICKAPP)
 }
