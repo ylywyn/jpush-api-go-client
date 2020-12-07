@@ -3,26 +3,28 @@ jpush-api-go-client
 
 概述
 ----------------------------------- 
-   这是JPush REST API 的 go 版本封装开发包,仅支持最新的REST API v3功能。
-   REST API 文档：http://docs.jpush.cn/display/dev/Push-API-v3
+这是JPush REST API 的 go 版本封装开发包,仅支持最新的REST API v3功能。 REST API 文档：http://docs.jpush.cn/display/dev/Push-API-v3
   
 
-使用  
+使用
 ----------------------------------- 
-   go get github.com/swordkee/jpush-api-go-client
-   
-   
-推送流程  
+go get github.com/swordkee/jpush-api-go-client
+
+
+推送流程
 ----------------------------------- 
+
 ### 1.构建要推送的平台： jpushclient.Platform
+
 	//Platform
 	var pf jpushclient.Platform
 	pf.Add(jpushclient.ANDROID)
 	pf.Add(jpushclient.IOS)
 	pf.Add(jpushclient.WINPHONE)
 	//pf.All()
-      
+
 ### 2.构建接收听众： jpushclient.Audience
+
 	//Audience
 	var ad jpushclient.Audience
 	s := []string{"t1", "t2", "t3"}
@@ -30,9 +32,9 @@ jpush-api-go-client
 	id := []string{"1", "2", "3"}
 	ad.SetID(id)
 	//ad.All()
-      
+
 ### 3.构建通知 jpushclient.Notice，或者消息： jpushclient.Message
-      
+
 	//Notice
 	var notice jpushclient.Notice
 	notice.SetAlert("alert_test")
@@ -45,17 +47,18 @@ jpush-api-go-client
     var msg jpushclient.Message
 	msg.Title = "Hello"
 	msg.MsgContent = "test"
-      
+
 ### 4.构建jpushclient.PayLoad
+
     req := NewPushRequest()
 	req.SetPlatform(&pf)
 	req.SetAudience(&ad)
 	req.SetMessage(&msg)
 	req.SetNotice(&notice)
 	req.SetOptions(&op)
-      
-      
+
 ### 5.构建PushClient，发出推送
+
 	client := jpushclient.NewClient(secret, appKey)
 	result, err := client.Push(req)
 	if err != nil {
@@ -64,8 +67,8 @@ jpush-api-go-client
 		fmt.Printf("ok:%s", r)
 	}
 
-  
 ### 6.完整demo
+
     package main
 
 	import (
