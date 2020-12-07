@@ -4,10 +4,12 @@ import (
 	"log"
 	"os"
 	"testing"
+	"time"
 )
 
 var client = NewClient(os.Getenv("APP_KEY"), os.Getenv("MASTER_SECRET"))
 
+//
 var registrationId = os.Getenv("REGISTRATION_ID")
 
 func getMsg() *PushRequest {
@@ -34,7 +36,7 @@ func getMsg() *PushRequest {
 	notice.SetAlert("alert_test")
 	notice.SetAndroidNotice(&AndroidNotice{Alert: "AndroidNotice"})
 	notice.SetIOSNotice(&IOSNotice{Alert: "IOSNotice"})
-	//notice.SetQuickAppNotice(&QuickAppNotice{Alert: "QuickAppNotice"})
+	notice.SetQuickAppNotice(&QuickAppNotice{Alert: "QuickAppNotice", Title: "test", Page: "url"})
 	notice.SetWinPhoneNotice(&WinPhoneNotice{Alert: "WinPhoneNotice"})
 
 	var msg Message
@@ -212,25 +214,17 @@ func TestClientDeviceDeleteTag(t *testing.T) {
 	t.Log(result)
 }
 
-//func TestClientCreateScheduleTask(t *testing.T) {
-//	req := &Schedule{
-//		Name:    "test",
-//		Enabled: true,
-//		Trigger: &ScheduleTrigger{
-//			Single: &ScheduleTriggerSingle{
-//				Timer: "2017-11-04 10:00:00",
-//			},
-//		},
-//		Push: getMsg(),
-//	}
-//	result, err := client.ScheduleCreateTask(req)
-//	if err != nil {
-//		t.Error(err)
-//		return
-//	}
-//	t.Log(result)
-//	//18785f08-c03b-11e7-be12-f8fa30f97302
-//}
+func TestClientCreateScheduleTask(t *testing.T) {
+	req := NewSchedule("test", "cid", true, getMsg())
+	req.SingleTrigger(time.Now())
+	result, err := client.ScheduleCreateTask(req)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Log(result)
+	//18785f08-c03b-11e7-be12-f8fa30f97302
+}
 func TestClientScheduleGetList(t *testing.T) {
 	result, err := client.ScheduleGetList(1)
 	if err != nil {
@@ -249,24 +243,17 @@ func TestClientScheduleView(t *testing.T) {
 	t.Log(result)
 }
 
-//func TestClientScheduleUpdate(t *testing.T) {
-//	req := &Schedule{
-//		Name:    "test",
-//		Enabled: false,
-//		Trigger: &ScheduleTrigger{
-//			Single: &ScheduleTriggerSingle{
-//				Timer: "2017-11-04 10:00:00",
-//			},
-//		},
-//		Push: getMsg(),
-//	}
-//	result, err := client.ScheduleUpdate("18785f08-c03b-11e7-be12-f8fa30f97302", req)
-//	if err != nil {
-//		t.Error(err)
-//		return
-//	}
-//	t.Log(result)
-//}
+func TestClientScheduleUpdate(t *testing.T) {
+	req := NewSchedule("test", "cid", false, getMsg())
+	req.SingleTrigger(time.Now())
+
+	result, err := client.ScheduleUpdate("18785f08-c03b-11e7-be12-f8fa30f97302", req)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Log(result)
+}
 
 func TestClientScheduleDelete(t *testing.T) {
 	result, err := client.ScheduleDelete("18785f08-c03b-11e7-be12-f8fa30f97302")

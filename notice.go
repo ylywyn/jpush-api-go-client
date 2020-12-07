@@ -54,9 +54,9 @@ type WinPhoneNotice struct {
 	Extras   map[string]interface{} `json:"extras,omitempty"`
 }
 type QuickAppNotice struct {
-	Title  string                 `json:"title,omitempty"`
+	Title  string                 `json:"title"`
 	Alert  string                 `json:"alert"`
-	Page   string                 `json:"page,omitempty"`
+	Page   string                 `json:"page"`
 	Extras map[string]interface{} `json:"extras,omitempty"`
 }
 
@@ -75,9 +75,11 @@ func (this *Notice) SetIOSNotice(n *IOSNotice) {
 func (this *Notice) SetVIOSNotice(n *VIOSNotice) {
 	this.VIOS = n
 }
+
 func (this *Notice) SetWinPhoneNotice(n *WinPhoneNotice) {
 	this.WINPhone = n
 }
+
 func (this *Notice) SetQuickAppNotice(n *QuickAppNotice) {
 	this.QuickApp = n
 }
