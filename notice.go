@@ -44,15 +44,18 @@ type IOSNotice struct {
 	Extras           map[string]interface{} `json:"extras,omitempty"`
 	ThreadId         string                 `json:"thread-id,omitempty"`
 }
+
 type VIOSNotice struct {
 	Key string `json:"key,omitempty"`
 }
+
 type WinPhoneNotice struct {
 	Alert    string                 `json:"alert"`
 	Title    string                 `json:"title,omitempty"`
 	OpenPage string                 `json:"_open_page,omitempty"`
 	Extras   map[string]interface{} `json:"extras,omitempty"`
 }
+
 type QuickAppNotice struct {
 	Title  string                 `json:"title"`
 	Alert  string                 `json:"alert"`

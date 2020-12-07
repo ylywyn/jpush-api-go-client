@@ -5,13 +5,15 @@ import (
 )
 
 type PushRequest struct {
-	Cid          string      `json:"cid,omitempty"`
-	Platform     interface{} `json:"platform"`
-	Audience     interface{} `json:"audience"`
-	Notification interface{} `json:"notification,omitempty"`
-	Message      interface{} `json:"message,omitempty"`
-	SmsMessage   interface{} `json:"sms_message,omitempty"`
-	Options      *Option     `json:"options,omitempty"`
+	Cid             string      `json:"cid,omitempty"`
+	Platform        interface{} `json:"platform"`
+	Audience        interface{} `json:"audience"`
+	Notification    interface{} `json:"notification,omitempty"`
+	Message         interface{} `json:"message,omitempty"`
+	SmsMessage      interface{} `json:"sms_message,omitempty"`
+	Notification3rd interface{} `json:"notification_3rd,omitempty"`
+	CallBack        interface{} `json:"callback,omitempty"`
+	Options         *Option     `json:"options,omitempty"`
 }
 
 func NewPushRequest() *PushRequest {
@@ -24,6 +26,7 @@ func NewPushRequest() *PushRequest {
 func (this *PushRequest) SetCid(cid string) {
 	this.Cid = cid
 }
+
 func (this *PushRequest) SetPlatform(pf *Platform) {
 	this.Platform = pf.Os
 }
@@ -32,18 +35,28 @@ func (this *PushRequest) SetAudience(ad *Audience) {
 	this.Audience = ad.Object
 }
 
-func (this *PushRequest) SetOptions(o *Option) {
-	this.Options = o
-}
-
 func (this *PushRequest) SetMessage(m *Message) {
 	this.Message = m
 }
+
 func (this *PushRequest) SetSmsMessage(m *SmsMessage) {
 	this.SmsMessage = m
 }
+
 func (this *PushRequest) SetNotice(notice *Notice) {
 	this.Notification = notice
+}
+
+func (this *PushRequest) SetNotice3rd(notice *Notice3rd) {
+	this.Notification3rd = notice
+}
+
+func (this *PushRequest) SetCallback(callback *CallBack) {
+	this.CallBack = callback
+}
+
+func (this *PushRequest) SetOptions(o *Option) {
+	this.Options = o
 }
 
 func (this *PushRequest) ToBytes() ([]byte, error) {

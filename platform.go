@@ -22,7 +22,7 @@ func (this *Platform) All() {
 
 func (this *Platform) Add(os string) error {
 	if this.Os == nil {
-		this.osArry = make([]string, 0, 3)
+		this.osArry = make([]string, 0, 4)
 	} else {
 		switch this.Os.(type) {
 		case string:

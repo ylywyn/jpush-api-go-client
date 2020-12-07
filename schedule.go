@@ -30,7 +30,7 @@ func (s *Schedule) SingleTrigger(t time.Time) {
 
 }
 
-func (s *Schedule) PeriodicalTrigger(start time.Time, end time.Time, time time.Time, timeUnit string, frequency int, point []string) {
+func (s *Schedule) PeriodicalTrigger(start, end time.Time, timeUnit string, frequency int, point []string) {
 	s.Trigger = map[string]interface{}{
 		"periodical": map[string]interface{}{
 			"start":     start.Format("2006-01-02 15:04:05"),
