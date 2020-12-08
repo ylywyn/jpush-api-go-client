@@ -18,9 +18,7 @@ go get github.com/swordkee/jpush-api-go-client
 
 	//Platform
 	var pf jpushclient.Platform
-	pf.Add(jpushclient.ANDROID)
-	pf.Add(jpushclient.IOS)
-	pf.Add(jpushclient.WINPHONE)
+	pf.AddAndroid().AddQuickApp().AddIOS().AddWinPhone()
 	//pf.All()
 
 ### 2.构建接收听众： jpushclient.Audience
@@ -28,34 +26,32 @@ go get github.com/swordkee/jpush-api-go-client
 	//Audience
 	var ad jpushclient.Audience
 	s := []string{"t1", "t2", "t3"}
-	ad.SetTag(s)
 	id := []string{"1", "2", "3"}
-	ad.SetID(id)
+    ad.SetTag(s).SetAlias(s).SetTagAnd(s).SetID([]string{registrationId}).SetTagNot(s)
 	//ad.All()
 
 ### 3.构建通知 jpushclient.Notice，或者消息： jpushclient.Message
 
 	//Notice
 	var notice jpushclient.Notice
-	notice.SetAlert("alert_test")
-	notice.SetAndroidNotice(&jpushclient.AndroidNotice{Alert: "AndroidNotice"})
-	notice.SetIOSNotice(&jpushclient.IOSNotice{Alert: "IOSNotice"})
-	notice.SetQuickAppNotice(&QuickAppNotice{Alert: "QuickAppNotice",Title: "test",Page: "url"})
-	notice.SetWinPhoneNotice(&jpushclient.WinPhoneNotice{Alert: "WinPhoneNotice"})
+	notice.SetAlert("alert_test").
+	    SetAndroidNotice(&jpushclient.AndroidNotice{Alert: "AndroidNotice"}).
+	    SetIOSNotice(&jpushclient.IOSNotice{Alert: "IOSNotice"}).
+	    SetQuickAppNotice(&QuickAppNotice{Alert: "QuickAppNotice",Title: "test",Page: "/page"}).
+	    SetWinPhoneNotice(&jpushclient.WinPhoneNotice{Alert: "WinPhoneNotice"})
       
     //jpushclient.Message
     var msg jpushclient.Message
-	msg.Title = "Hello"
-	msg.MsgContent = "test"
+	msg.SetTitle("Hello").SetMsgContent("test")
 
 ### 4.构建jpushclient.PayLoad
 
     req := NewPushRequest()
-	req.SetPlatform(&pf)
-	req.SetAudience(&ad)
-	req.SetMessage(&msg)
-	req.SetNotice(&notice)
-	req.SetOptions(&op)
+	req.SetPlatform(&pf).
+	    SetAudience(&ad).
+	    SetMessage(&msg).
+	    SetNotice(&notice).
+	    SetOptions(&op)
 
 ### 5.构建PushClient，发出推送
 
@@ -85,42 +81,35 @@ go get github.com/swordkee/jpush-api-go-client
 
 		//Platform
 		var pf jpushclient.Platform
-		pf.Add(jpushclient.ANDROID)
-		pf.Add(jpushclient.IOS)
-            pf.Add(jpushclient.QUICKAPP)
-		pf.Add(jpushclient.WINPHONE)
+		pf.AddAndroid().AddQuickApp().AddIOS().AddWinPhone()
 		//pf.All()
 
 		//Audience
 		var ad jpushclient.Audience
 		s := []string{"1", "2", "3"}
-		ad.SetTag(s)
-            ad.SetTagAnd(s)
-		ad.SetAlias(s)
-		ad.SetID(s)
+		ad.SetTag(s).SetAlias(s).SetTagAnd(s).SetID([]string{registrationId}).SetTagNot(s)
 		//ad.All()
 
 		//Notice
 		var notice jpushclient.Notice
-		notice.SetAlert("alert_test")
-		notice.SetAndroidNotice(&jpushclient.AndroidNotice{Alert: "AndroidNotice"})
-		notice.SetIOSNotice(&jpushclient.IOSNotice{Alert: "IOSNotice"})
-            notice.SetQuickAppNotice(&QuickAppNotice{Alert: "QuickAppNotice",Title: "test",Page: "url"})
-		notice.SetWinPhoneNotice(&jpushclient.WinPhoneNotice{Alert: "WinPhoneNotice"})
+		notice.SetAlert("alert_test").
+		    SetAndroidNotice(&jpushclient.AndroidNotice{Alert: "AndroidNotice"}).
+		    SetIOSNotice(&jpushclient.IOSNotice{Alert: "IOSNotice"}).
+                SetQuickAppNotice(&QuickAppNotice{Alert: "QuickAppNotice",Title: "test",Page: "/page"}).
+		    SetWinPhoneNotice(&jpushclient.WinPhoneNotice{Alert: "WinPhoneNotice"})
 
 		var msg jpushclient.Message
-		msg.Title = "Hello"
-		msg.MsgContent = "test"
+		msg.SetTitle("Hello").SetMsgContent("test")
 
 		req := NewPushRequest()
-            req.SetPlatform(&pf)
-	        req.SetAudience(&ad)
-	        req.SetMessage(&msg)
-	        req.SetNotice(&notice)
-            req.SetOptions(&op)
+            req.SetPlatform(&pf).
+	            SetAudience(&ad).
+	            SetMessage(&msg).
+	            SetNotice(&notice).
+                SetOptions(&op)
 
-		bytes, _ := req.ToBytes()
-		fmt.Printf("%s\r\n", string(bytes))
+		str, _ := req.ToJson()
+		fmt.Printf("%s\r\n", str)
 
 		//push
 		c := jpushclient.NewClient(secret, appKey)
