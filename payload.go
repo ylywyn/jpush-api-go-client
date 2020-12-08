@@ -23,40 +23,57 @@ func NewPushRequest() *PushRequest {
 	pl.Options = o
 	return pl
 }
-func (this *PushRequest) SetCid(cid string) {
+func (this *PushRequest) SetCid(cid string) *PushRequest {
 	this.Cid = cid
+	return this
 }
 
-func (this *PushRequest) SetPlatform(pf *Platform) {
+func (this *PushRequest) SetPlatform(pf *Platform) *PushRequest {
 	this.Platform = pf.Os
+	return this
 }
 
-func (this *PushRequest) SetAudience(ad *Audience) {
+func (this *PushRequest) SetAudience(ad *Audience) *PushRequest {
 	this.Audience = ad.Object
+	return this
 }
 
-func (this *PushRequest) SetMessage(m *Message) {
+func (this *PushRequest) SetMessage(m *Message) *PushRequest {
 	this.Message = m
+	return this
 }
 
-func (this *PushRequest) SetSmsMessage(m *SmsMessage) {
+func (this *PushRequest) SetSmsMessage(m *SmsMessage) *PushRequest {
 	this.SmsMessage = m
+	return this
 }
 
-func (this *PushRequest) SetNotice(notice *Notice) {
+func (this *PushRequest) SetNotice(notice *Notice) *PushRequest {
 	this.Notification = notice
+	return this
 }
 
-func (this *PushRequest) SetNotice3rd(notice *Notice3rd) {
+func (this *PushRequest) SetNotice3rd(notice *Notice3rd) *PushRequest {
 	this.Notification3rd = notice
+	return this
 }
 
-func (this *PushRequest) SetCallback(callback *CallBack) {
+func (this *PushRequest) SetCallback(callback *CallBack) *PushRequest {
 	this.CallBack = callback
+	return this
 }
 
-func (this *PushRequest) SetOptions(o *Option) {
+func (this *PushRequest) SetOptions(o *Option) *PushRequest {
 	this.Options = o
+	return this
+}
+
+func (this *PushRequest) ToJson() (string, error) {
+	content, err := json.Marshal(this)
+	if err != nil {
+		return "", err
+	}
+	return string(content), nil
 }
 
 func (this *PushRequest) ToBytes() ([]byte, error) {

@@ -42,6 +42,15 @@ func (s *Schedule) PeriodicalTrigger(start, end time.Time, timeUnit string, freq
 		},
 	}
 }
+
+func (this *Schedule) ToJson() (string, error) {
+	content, err := json.Marshal(this)
+	if err != nil {
+		return "", err
+	}
+	return string(content), nil
+}
+
 func (this *Schedule) ToBytes() ([]byte, error) {
 	content, err := json.Marshal(this)
 	if err != nil {

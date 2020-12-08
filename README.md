@@ -4,7 +4,7 @@ jpush-api-go-client
 概述
 ----------------------------------- 
 这是JPush REST API 的 go 版本封装开发包,仅支持最新的REST API v3功能。 REST API 文档：http://docs.jpush.cn/display/dev/Push-API-v3
-  
+
 
 使用
 ----------------------------------- 

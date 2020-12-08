@@ -1,5 +1,7 @@
 package jpushclient
 
+import "encoding/json"
+
 type Notice struct {
 	Alert    string          `json:"alert,omitempty"`
 	Android  *AndroidNotice  `json:"android,omitempty"`
@@ -63,26 +65,48 @@ type QuickAppNotice struct {
 	Extras map[string]interface{} `json:"extras,omitempty"`
 }
 
-func (this *Notice) SetAlert(alert string) {
+func (this *Notice) SetAlert(alert string) *Notice {
 	this.Alert = alert
+	return this
 }
 
-func (this *Notice) SetAndroidNotice(n *AndroidNotice) {
+func (this *Notice) SetAndroidNotice(n *AndroidNotice) *Notice {
 	this.Android = n
+	return this
 }
 
-func (this *Notice) SetIOSNotice(n *IOSNotice) {
+func (this *Notice) SetIOSNotice(n *IOSNotice) *Notice {
 	this.IOS = n
+	return this
 }
 
-func (this *Notice) SetVIOSNotice(n *VIOSNotice) {
+func (this *Notice) SetVIOSNotice(n *VIOSNotice) *Notice {
 	this.VIOS = n
+	return this
 }
 
-func (this *Notice) SetWinPhoneNotice(n *WinPhoneNotice) {
+func (this *Notice) SetWinPhoneNotice(n *WinPhoneNotice) *Notice {
 	this.WINPhone = n
+	return this
 }
 
-func (this *Notice) SetQuickAppNotice(n *QuickAppNotice) {
+func (this *Notice) SetQuickAppNotice(n *QuickAppNotice) *Notice {
 	this.QuickApp = n
+	return this
+}
+
+func (this *Notice) ToJson() (string, error) {
+	content, err := json.Marshal(this)
+	if err != nil {
+		return "", err
+	}
+	return string(content), nil
+}
+
+func (this *Notice) ToBytes() ([]byte, error) {
+	content, err := json.Marshal(this)
+	if err != nil {
+		return nil, err
+	}
+	return content, nil
 }

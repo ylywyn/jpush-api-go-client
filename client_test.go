@@ -8,52 +8,46 @@ import (
 )
 
 var client = NewClient(os.Getenv("APP_KEY"), os.Getenv("MASTER_SECRET"))
-
-//
 var registrationId = os.Getenv("REGISTRATION_ID")
 
 func getMsg() *PushRequest {
 	params := make(map[string]interface{})
 	params["url"] = "https://www.jpush.cn"
 	var pf Platform
-	pf.Add(ANDROID)
-	pf.Add(IOS)
-	pf.Add(QUICKAPP)
-	pf.Add(WINPHONE)
+	pf.AddAndroid().AddQuickApp().AddIOS().AddWinPhone()
 	//pf.All()
 
 	//Audience
 	var ad Audience
 	s := []string{"1", "2", "3"}
-	ad.SetTag(s)
-	ad.SetAlias(s)
-	ad.SetID([]string{registrationId})
-	ad.SetTagNot(s)
+	ad.SetTag(s).SetAlias(s).SetTagAnd(s).SetID([]string{registrationId}).SetTagNot(s)
 	//ad.All()
+	log.Println(ad.ToJson())
 
 	//Notice
 	var notice Notice
-	notice.SetAlert("alert_test")
-	notice.SetAndroidNotice(&AndroidNotice{Alert: "AndroidNotice"})
-	notice.SetIOSNotice(&IOSNotice{Alert: "IOSNotice"})
-	notice.SetQuickAppNotice(&QuickAppNotice{Alert: "QuickAppNotice", Title: "test", Page: "url"})
-	notice.SetWinPhoneNotice(&WinPhoneNotice{Alert: "WinPhoneNotice"})
+	notice.SetAlert("alert_test").
+		SetAndroidNotice(&AndroidNotice{Alert: "AndroidNotice"}).
+		SetIOSNotice(&IOSNotice{Alert: "IOSNotice"}).
+		SetQuickAppNotice(&QuickAppNotice{Alert: "QuickAppNotice", Title: "test", Page: "url"}).
+		SetWinPhoneNotice(&WinPhoneNotice{Alert: "WinPhoneNotice"})
+	log.Println(notice.ToJson())
 
 	var msg Message
-	msg.Title = "Hello"
-	msg.MsgContent = "test"
+	msg.SetTitle("Hello").SetMsgContent("test")
+	log.Println(msg.ToJson())
 
 	var op Option
-	op.TimeToLive = 60
-	op.ApnsCollapseId = "jiguang_test_201706011100"
+	op.SetTimeToLive(60).SetApnsId("jiguang_test_201706011100")
+	log.Println(op.ToJson())
 
 	req := NewPushRequest()
-	req.SetPlatform(&pf)
-	req.SetAudience(&ad)
-	req.SetMessage(&msg)
-	req.SetNotice(&notice)
-	req.SetOptions(&op)
-	log.Println(req)
+	req.SetPlatform(&pf).
+		SetAudience(&ad).
+		SetMessage(&msg).
+		SetNotice(&notice).
+		SetOptions(&op)
+	log.Println(req.ToJson())
 	return req
 }
 

@@ -16,11 +16,12 @@ type Platform struct {
 	osArry []string
 }
 
-func (this *Platform) All() {
+func (this *Platform) All() *Platform {
 	this.Os = "all"
+	return this
 }
 
-func (this *Platform) Add(os string) error {
+func (this *Platform) add(os string) error {
 	if this.Os == nil {
 		this.osArry = make([]string, 0, 4)
 	} else {
@@ -55,18 +56,22 @@ func (this *Platform) Add(os string) error {
 	return nil
 }
 
-func (this *Platform) AddIOS() {
-	this.Add(IOS)
+func (this *Platform) AddIOS() *Platform {
+	this.add(IOS)
+	return this
 }
 
-func (this *Platform) AddAndroid() {
-	this.Add(ANDROID)
+func (this *Platform) AddAndroid() *Platform {
+	this.add(ANDROID)
+	return this
 }
 
-func (this *Platform) AddWinPhone() {
-	this.Add(WINPHONE)
+func (this *Platform) AddWinPhone() *Platform {
+	this.add(WINPHONE)
+	return this
 }
 
-func (this *Platform) AddQuickApp() {
-	this.Add(QUICKAPP)
+func (this *Platform) AddQuickApp() *Platform {
+	this.add(QUICKAPP)
+	return this
 }
