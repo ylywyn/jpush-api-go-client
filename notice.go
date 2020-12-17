@@ -25,6 +25,7 @@ type AndroidNotice struct {
 	BigPicPath        string                 `json:"big_pic_path,omitempty"`
 	Extras            map[string]interface{} `json:"extras,omitempty"`
 	LargeIcon         string                 `json:"large_icon,omitempty"`
+	SmallIconUri      string                 `json:"small_icon_uri,omitempty"`
 	Intent            map[string]interface{} `json:"intent,omitempty"`
 	UriActivity       string                 `json:"uri_activity,omitempty"`
 	UriAction         string                 `json:"uri_action,omitempty"`

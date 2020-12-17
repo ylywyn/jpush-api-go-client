@@ -14,6 +14,7 @@ type Client struct {
 	AppKey       string
 	MasterSecret string
 	pushUrl      string
+	imageUrl     string
 	adminUrl     string
 	reportUrl    string
 	deviceUrl    string
@@ -27,6 +28,7 @@ func NewClient(appKey, masterSecret string) *Client {
 	client.pushUrl = "https://api.jpush.cn"
 	client.reportUrl = "https://report.jpush.cn"
 	client.deviceUrl = "https://device.jpush.cn"
+	client.imageUrl = "https://api.jpush.cn/v3/images"
 	client.adminUrl = "https://admin.jpush.cn"
 	return client
 }

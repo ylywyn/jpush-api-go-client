@@ -14,38 +14,46 @@ func getMsg() *PushRequest {
 	params := make(map[string]interface{})
 	params["url"] = "https://www.jpush.cn"
 	var pf Platform
-	pf.AddAndroid().AddQuickApp().AddIOS().AddWinPhone()
-	//pf.All()
+	//pf.AddAndroid().AddQuickApp().AddIOS().AddWinPhone()
+	pf.All()
 
 	//Audience
 	var ad Audience
-	s := []string{"1", "2", "3"}
-	ad.SetTag(s).SetAlias(s).SetTagAnd(s).SetID([]string{registrationId}).SetTagNot(s)
-	//ad.All()
+	//s := []string{"1", "2", "3"}
+	//ad.SetTag(s).SetAlias(s).SetTagAnd(s).SetID([]string{registrationId}).SetTagNot(s)
+	ad.SetID([]string{registrationId})
+	ad.All()
 	log.Println(ad.ToJson())
 
 	//Notice
+	//mediaId:="jgmedia-1-f50da7d3-e2d5-4f34-af82-ebcb4045b4e4"
 	var notice Notice
 	notice.SetAlert("alert_test").
-		SetAndroidNotice(&AndroidNotice{Alert: "AndroidNotice"}).
+		SetAndroidNotice(&AndroidNotice{Alert: "AndroidNotice1", Title: "test"}).
 		SetIOSNotice(&IOSNotice{Alert: "IOSNotice"}).
-		SetQuickAppNotice(&QuickAppNotice{Alert: "QuickAppNotice", Title: "test", Page: "url"}).
+		SetQuickAppNotice(&QuickAppNotice{Alert: "QuickAppNotice", Title: "test", Page: "/page"}).
 		SetWinPhoneNotice(&WinPhoneNotice{Alert: "WinPhoneNotice"})
 	log.Println(notice.ToJson())
 
+	var notice3rd Notice3rd
+	notice3rd.SetTitle("alert_testiii").SetContent("AndroidNotice1111")
 	var msg Message
 	msg.SetTitle("Hello").SetMsgContent("test")
 	log.Println(msg.ToJson())
 
 	var op Option
-	op.SetTimeToLive(60).SetApnsId("jiguang_test_201706011100")
+	op.SetTimeToLive(86400).SetApnsId("jiguang_test_201706011100")
 	log.Println(op.ToJson())
-
+	var cal CallBack
+	cal.SetUrl("http://penguin.test.analytics.zjweishi.com").SetType("3")
 	req := NewPushRequest()
 	req.SetPlatform(&pf).
 		SetAudience(&ad).
 		SetMessage(&msg).
+		SetInAppMessage(true).
 		SetNotice(&notice).
+		//SetCallback(&cal).
+		//SetNotice3rd(&notice3rd).
 		SetOptions(&op)
 	log.Println(req.ToJson())
 	return req
@@ -91,7 +99,7 @@ func TestClientValidate(t *testing.T) {
 
 func TestClientReportReceived(t *testing.T) {
 	msgId := "1345223734"
-	result, err := client.ReportReceived([]string{msgId})
+	result, err := client.GetReceived([]string{msgId})
 	if err != nil {
 		t.Error(err)
 		return
@@ -101,7 +109,7 @@ func TestClientReportReceived(t *testing.T) {
 
 func TestClientReportStatusMessage(t *testing.T) {
 	msgId := 1345223734
-	result, err := client.ReportStatusMessage(&ReportStatusRequest{
+	result, err := client.GetMessageStatus(&ReportStatusRequest{
 		MsgId:           msgId,
 		RegistrationIds: []string{registrationId},
 	})
@@ -113,7 +121,7 @@ func TestClientReportStatusMessage(t *testing.T) {
 }
 
 func TestClientDeviceView(t *testing.T) {
-	result, err := client.DeviceView(registrationId)
+	result, err := client.GetDevices(registrationId)
 	if err != nil {
 		t.Error(err)
 		return
@@ -153,7 +161,7 @@ func TestClientDeviceEmptyTagsRequest(t *testing.T) {
 }
 
 func TestClientDeviceGetWithAlias(t *testing.T) {
-	result, err := client.DeviceGetWithAlias("xialei", nil)
+	result, err := client.GetAliasDevices("xialei", nil)
 	if err != nil {
 		t.Error(err)
 		return
@@ -162,7 +170,7 @@ func TestClientDeviceGetWithAlias(t *testing.T) {
 }
 
 func TestClientDeviceDeleteAlias(t *testing.T) {
-	result, err := client.DeviceDeleteAlias("xialei1")
+	result, err := client.DeleteAlias("xialei1")
 	if err != nil {
 		t.Error(err)
 		return
@@ -171,7 +179,7 @@ func TestClientDeviceDeleteAlias(t *testing.T) {
 }
 
 func TestClientDeviceGetTags(t *testing.T) {
-	result, err := client.DeviceGetTags()
+	result, err := client.GetTags()
 	if err != nil {
 		t.Error(err)
 		return
@@ -180,7 +188,7 @@ func TestClientDeviceGetTags(t *testing.T) {
 }
 
 func TestClientDeviceCheckDeviceWithTag(t *testing.T) {
-	result, err := client.DeviceCheckDeviceWithTag("xialei", registrationId)
+	result, err := client.IsDeviceInTag("xialei", registrationId)
 	if err != nil {
 		t.Error(err)
 		return
@@ -191,7 +199,7 @@ func TestClientDeviceBindTags(t *testing.T) {
 	req := &DeviceBindTagsRequest{
 		Add: []string{registrationId},
 	}
-	result, err := client.DeviceBindTags("xialei", req)
+	result, err := client.UpdateTag("xialei", req)
 	if err != nil {
 		t.Error(err)
 		return
@@ -200,7 +208,7 @@ func TestClientDeviceBindTags(t *testing.T) {
 }
 
 func TestClientDeviceDeleteTag(t *testing.T) {
-	result, err := client.DeviceDeleteTag("xialei", nil)
+	result, err := client.DeleteTag("xialei", nil)
 	if err != nil {
 		t.Error(err)
 		return
@@ -211,7 +219,7 @@ func TestClientDeviceDeleteTag(t *testing.T) {
 func TestClientCreateScheduleTask(t *testing.T) {
 	req := NewSchedule("test", "cid", true, getMsg())
 	req.SingleTrigger(time.Now())
-	result, err := client.ScheduleCreateTask(req)
+	result, err := client.CreateSingleSchedule(req)
 	if err != nil {
 		t.Error(err)
 		return
@@ -220,7 +228,7 @@ func TestClientCreateScheduleTask(t *testing.T) {
 	//18785f08-c03b-11e7-be12-f8fa30f97302
 }
 func TestClientScheduleGetList(t *testing.T) {
-	result, err := client.ScheduleGetList(1)
+	result, err := client.GetSchedules(1)
 	if err != nil {
 		t.Error(err)
 		return
@@ -229,7 +237,7 @@ func TestClientScheduleGetList(t *testing.T) {
 }
 
 func TestClientScheduleView(t *testing.T) {
-	result, err := client.ScheduleView("18785f08-c03b-11e7-be12-f8fa30f97302")
+	result, err := client.GetSchedule("18785f08-c03b-11e7-be12-f8fa30f97302")
 	if err != nil {
 		t.Error(err)
 		return
@@ -241,7 +249,7 @@ func TestClientScheduleUpdate(t *testing.T) {
 	req := NewSchedule("test", "cid", false, getMsg())
 	req.SingleTrigger(time.Now())
 
-	result, err := client.ScheduleUpdate("18785f08-c03b-11e7-be12-f8fa30f97302", req)
+	result, err := client.UpdateSingleSchedule("18785f08-c03b-11e7-be12-f8fa30f97302", req)
 	if err != nil {
 		t.Error(err)
 		return
@@ -250,7 +258,7 @@ func TestClientScheduleUpdate(t *testing.T) {
 }
 
 func TestClientScheduleDelete(t *testing.T) {
-	result, err := client.ScheduleDelete("18785f08-c03b-11e7-be12-f8fa30f97302")
+	result, err := client.DeleteSchedule("18785f08-c03b-11e7-be12-f8fa30f97302")
 	if err != nil {
 		t.Error(err)
 		return
@@ -258,7 +266,19 @@ func TestClientScheduleDelete(t *testing.T) {
 	t.Log(result)
 }
 func TestClientDevicesStatus(t *testing.T) {
-	result, err := client.DeviceGetUserStatus([]string{"1104a8979215a3f999a"})
+	result, err := client.GetDevicesStatus([]string{"1104a8979215a3f999a"})
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Log(result)
+}
+func TestClientAddImageUrl(t *testing.T) {
+	req := &ImageRequest{
+		ImageType: 1,
+		ImageUrl:  "https://pic1.zhimg.com/v2-b057cf8dfb12732399c42f658a862c34_r.jpg",
+	}
+	result, err := client.AddImageUrl(req)
 	if err != nil {
 		t.Error(err)
 		return

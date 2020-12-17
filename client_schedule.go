@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-func (c *Client) ScheduleCreateTask(req *Schedule) (map[string]interface{}, error) {
+func (c *Client) CreateSingleSchedule(req *Schedule) (map[string]interface{}, error) {
 	link := c.pushUrl + "/v3/schedules"
 	buf, err := json.Marshal(req)
 	if err != nil {
@@ -19,7 +19,7 @@ func (c *Client) ScheduleCreateTask(req *Schedule) (map[string]interface{}, erro
 	return resp.Map()
 }
 
-func (c *Client) ScheduleGetList(page int) (map[string]interface{}, error) {
+func (c *Client) GetSchedules(page int) (map[string]interface{}, error) {
 	link := c.pushUrl + "/v3/schedules"
 	if page > 0 {
 		link += "?page=" + strconv.Itoa(page)
@@ -31,7 +31,7 @@ func (c *Client) ScheduleGetList(page int) (map[string]interface{}, error) {
 	return resp.Map()
 }
 
-func (c *Client) ScheduleView(id string) (map[string]interface{}, error) {
+func (c *Client) GetSchedule(id string) (map[string]interface{}, error) {
 	link := c.pushUrl + "/v3/schedules/" + id
 	resp, err := c.request("GET", link, nil, false)
 	if err != nil {
@@ -40,7 +40,7 @@ func (c *Client) ScheduleView(id string) (map[string]interface{}, error) {
 	return resp.Map()
 }
 
-func (c *Client) ScheduleViewMsgId(id string) (map[string]interface{}, error) {
+func (c *Client) GetMsgIds(id string) (map[string]interface{}, error) {
 	link := c.pushUrl + "/v3/schedules/" + id + "/msg_ids"
 	resp, err := c.request("GET", link, nil, false)
 	if err != nil {
@@ -49,7 +49,7 @@ func (c *Client) ScheduleViewMsgId(id string) (map[string]interface{}, error) {
 	return resp.Map()
 }
 
-func (c *Client) ScheduleUpdate(id string, req *Schedule) (map[string]interface{}, error) {
+func (c *Client) UpdateSingleSchedule(id string, req *Schedule) (map[string]interface{}, error) {
 	link := c.pushUrl + "/v3/schedules/" + id
 	buf, err := json.Marshal(req)
 	if err != nil {
@@ -62,7 +62,7 @@ func (c *Client) ScheduleUpdate(id string, req *Schedule) (map[string]interface{
 	return resp.Map()
 }
 
-func (c *Client) ScheduleDelete(id string) ([]byte, error) {
+func (c *Client) DeleteSchedule(id string) ([]byte, error) {
 	link := c.pushUrl + "/v3/schedules/" + id
 	resp, err := c.request("DELETE", link, nil, false)
 	if err != nil {

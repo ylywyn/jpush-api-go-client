@@ -11,7 +11,7 @@ type AdminRequest struct {
 	GroupName      string `json:"group_name,string"`
 }
 
-func (c *Client) AdminCreateApp(req *AdminRequest) (map[string]interface{}, error) {
+func (c *Client) CreateApp(req *AdminRequest) (map[string]interface{}, error) {
 	link := c.adminUrl + "/v1/app"
 	buf, err := json.Marshal(req)
 	if err != nil {
@@ -24,7 +24,7 @@ func (c *Client) AdminCreateApp(req *AdminRequest) (map[string]interface{}, erro
 	return resp.Map()
 }
 
-func (c *Client) AdminDeleteApp(appKey string) ([]byte, error) {
+func (c *Client) DeleteApp(appKey string) ([]byte, error) {
 	link := c.pushUrl + "/v1/app/" + appKey + "/delete"
 	resp, err := c.request("POST", link, nil, false)
 	if err != nil {

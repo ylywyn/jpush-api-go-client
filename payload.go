@@ -10,6 +10,7 @@ type PushRequest struct {
 	Audience        interface{} `json:"audience"`
 	Notification    interface{} `json:"notification,omitempty"`
 	Message         interface{} `json:"message,omitempty"`
+	InAppMessage    bool        `json:"inapp_message,omitempty"`
 	SmsMessage      interface{} `json:"sms_message,omitempty"`
 	Notification3rd interface{} `json:"notification_3rd,omitempty"`
 	CallBack        interface{} `json:"callback,omitempty"`
@@ -40,6 +41,11 @@ func (this *PushRequest) SetAudience(ad *Audience) *PushRequest {
 
 func (this *PushRequest) SetMessage(m *Message) *PushRequest {
 	this.Message = m
+	return this
+}
+
+func (this *PushRequest) SetInAppMessage(b bool) *PushRequest {
+	this.InAppMessage = b
 	return this
 }
 

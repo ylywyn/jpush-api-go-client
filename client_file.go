@@ -1,6 +1,6 @@
 package jpushclient
 
-func (c *Client) FileGetList() (map[string]interface{}, error) {
+func (c *Client) QueryEffectFiles() (map[string]interface{}, error) {
 	link := c.pushUrl + "/v3/files"
 	resp, err := c.request("GET", link, nil, false)
 	if err != nil {
@@ -9,7 +9,7 @@ func (c *Client) FileGetList() (map[string]interface{}, error) {
 	return resp.Map()
 }
 
-func (c *Client) FileView(fileId string) (map[string]interface{}, error) {
+func (c *Client) QueryFile(fileId string) (map[string]interface{}, error) {
 	link := c.pushUrl + "/v3/files/" + fileId
 	resp, err := c.request("GET", link, nil, false)
 	if err != nil {
@@ -18,7 +18,7 @@ func (c *Client) FileView(fileId string) (map[string]interface{}, error) {
 	return resp.Map()
 }
 
-func (c *Client) FileDeleteTag(fileId string) ([]byte, error) {
+func (c *Client) DeleteFile(fileId string) ([]byte, error) {
 	link := c.pushUrl + "/v3/files/" + fileId
 	resp, err := c.request("DELETE", link, nil, false)
 	if err != nil {

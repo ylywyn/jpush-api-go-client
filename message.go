@@ -31,6 +31,7 @@ func (this *Message) AddExtras(key string, value interface{}) *Message {
 	this.Extras[key] = value
 	return this
 }
+
 func (this *Message) ToJson() (string, error) {
 	content, err := json.Marshal(this)
 	if err != nil {
@@ -38,6 +39,7 @@ func (this *Message) ToJson() (string, error) {
 	}
 	return string(content), nil
 }
+
 func (this *Message) ToBytes() ([]byte, error) {
 	content, err := json.Marshal(this)
 	if err != nil {
