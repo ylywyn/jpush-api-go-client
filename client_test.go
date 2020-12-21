@@ -29,7 +29,7 @@ func getMsg() *PushRequest {
 	//mediaId:="jgmedia-1-f50da7d3-e2d5-4f34-af82-ebcb4045b4e4"
 	var notice Notice
 	notice.SetAlert("alert_test").
-		SetAndroidNotice(&AndroidNotice{Alert: "AndroidNotice1", Title: "test"}).
+		SetAndroidNotice(&AndroidNotice{Alert: "AndroidNotice1111111", Title: "testi1111"}).
 		SetIOSNotice(&IOSNotice{Alert: "IOSNotice"}).
 		SetQuickAppNotice(&QuickAppNotice{Alert: "QuickAppNotice", Title: "test", Page: "/page"}).
 		SetWinPhoneNotice(&WinPhoneNotice{Alert: "WinPhoneNotice"})
@@ -217,8 +217,16 @@ func TestClientDeviceDeleteTag(t *testing.T) {
 }
 
 func TestClientCreateScheduleTask(t *testing.T) {
-	req := NewSchedule("test", "cid", true, getMsg())
-	req.SingleTrigger(time.Now())
+	req := &ScheduleRequest{
+		Name:    "test",
+		Enabled: true,
+		Trigger: &ScheduleTrigger{
+			Single: &ScheduleTriggerSingle{
+				Timer: "2017-11-04 10:00:00",
+			},
+		},
+		Push: getMsg(),
+	}
 	result, err := client.CreateSingleSchedule(req)
 	if err != nil {
 		t.Error(err)
@@ -246,8 +254,16 @@ func TestClientScheduleView(t *testing.T) {
 }
 
 func TestClientScheduleUpdate(t *testing.T) {
-	req := NewSchedule("test", "cid", false, getMsg())
-	req.SingleTrigger(time.Now())
+	req := &ScheduleRequest{
+		Name:    "test",
+		Enabled: false,
+		Trigger: &ScheduleTrigger{
+			Single: &ScheduleTriggerSingle{
+				Timer: time.Now().String(),
+			},
+		},
+		Push: getMsg(),
+	}
 
 	result, err := client.UpdateSingleSchedule("18785f08-c03b-11e7-be12-f8fa30f97302", req)
 	if err != nil {

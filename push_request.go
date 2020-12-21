@@ -17,6 +17,21 @@ type PushRequest struct {
 	Options         *Option     `json:"options,omitempty"`
 }
 
+type PushSingleRequest struct {
+	PushList PushList
+}
+
+type PushList struct {
+	Cid struct {
+		Platform     Platform    `json:"platform"`
+		Target       string      `json:"target"`
+		Notification *Notice     `json:"notification,omitempty"`
+		Message      *Message    `json:"message,omitempty"`
+		SmsMessage   *SmsMessage `json:"sms_message,omitempty"`
+		Options      *Option     `json:"options,omitempty"`
+	}
+}
+
 func NewPushRequest() *PushRequest {
 	pl := &PushRequest{}
 	o := &Option{}

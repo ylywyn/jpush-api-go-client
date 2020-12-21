@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-func (c *Client) CreateSingleSchedule(req *Schedule) (map[string]interface{}, error) {
+func (c *Client) CreateSingleSchedule(req *ScheduleRequest) (map[string]interface{}, error) {
 	link := c.pushUrl + "/v3/schedules"
 	buf, err := json.Marshal(req)
 	if err != nil {
@@ -49,7 +49,7 @@ func (c *Client) GetMsgIds(id string) (map[string]interface{}, error) {
 	return resp.Map()
 }
 
-func (c *Client) UpdateSingleSchedule(id string, req *Schedule) (map[string]interface{}, error) {
+func (c *Client) UpdateSingleSchedule(id string, req *ScheduleRequest) (map[string]interface{}, error) {
 	link := c.pushUrl + "/v3/schedules/" + id
 	buf, err := json.Marshal(req)
 	if err != nil {

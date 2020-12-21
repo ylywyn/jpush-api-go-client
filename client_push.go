@@ -60,15 +60,37 @@ func (c *Client) Validate(req *PushRequest) (map[string]interface{}, error) {
 	return resp.Map()
 }
 
-//func (c *Client) PushSingle(push *PushSingleRequest) (map[string]interface{}, error) {
-//	link := c.pushUrl + "/v3/push/batch/regid/single"
-//	buf, err := json.Marshal(push)
-//	if err != nil {
-//		return nil, err
-//	}
-//	resp, err := c.request("POST", link, bytes.NewReader(buf), false)
-//	if err != nil {
-//		return nil, err
-//	}
-//	return resp.Map()
-//}
+func (c *Client) BatchPushByRegId(push *PushSingleRequest) (map[string]interface{}, error) {
+	link := c.pushUrl + "/v3/push/batch/regid/single"
+	buf, err := json.Marshal(push)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := c.request("POST", link, bytes.NewReader(buf), false)
+	if err != nil {
+		return nil, err
+	}
+	return resp.Map()
+}
+
+func (c *Client) BatchPushByAlias(push *PushSingleRequest) (map[string]interface{}, error) {
+	link := c.pushUrl + "/v3/push/batch/alias/single"
+	buf, err := json.Marshal(push)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := c.request("POST", link, bytes.NewReader(buf), false)
+	if err != nil {
+		return nil, err
+	}
+	return resp.Map()
+}
+
+func (c *Client) DeletePush(msgId string) ([]byte, error) {
+	link := c.pushUrl + "/v3/push/" + msgId
+	resp, err := c.request("DELETE", link, nil, false)
+	if err != nil {
+		return nil, err
+	}
+	return resp.Bytes(), nil
+}

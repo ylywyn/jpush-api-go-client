@@ -1,6 +1,7 @@
 package jpushclient
 
 import (
+	"encoding/json"
 	"errors"
 )
 
@@ -74,4 +75,20 @@ func (this *Platform) AddWinPhone() *Platform {
 func (this *Platform) AddQuickApp() *Platform {
 	this.add(QUICKAPP)
 	return this
+}
+
+func (this *Platform) ToJson() (string, error) {
+	content, err := json.Marshal(this)
+	if err != nil {
+		return "", err
+	}
+	return string(content), nil
+}
+
+func (this *Platform) ToBytes() ([]byte, error) {
+	content, err := json.Marshal(this)
+	if err != nil {
+		return nil, err
+	}
+	return content, nil
 }

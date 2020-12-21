@@ -5,12 +5,6 @@ import (
 	"encoding/json"
 )
 
-type AdminRequest struct {
-	AppName        string `json:"app_name,string"`
-	AndroidPackage string `json:"android_package,string"`
-	GroupName      string `json:"group_name,string"`
-}
-
 func (c *Client) CreateApp(req *AdminRequest) (map[string]interface{}, error) {
 	link := c.adminUrl + "/v1/app"
 	buf, err := json.Marshal(req)
