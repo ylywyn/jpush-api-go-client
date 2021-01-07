@@ -45,7 +45,7 @@ func SendPostBytes(url string, content []byte, authCode string) (string, error) 
 
 func SendPostBytes2(url string, data []byte, authCode string) (string, error) {
 
-	client := &http.Client{}
+	client := &http.Client{Timeout: DEFAULT_CONNECTION_TIMEOUT*time.Second}
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(data))
 	req.Header.Add("Charset", CHARSET)
 	req.Header.Add("Authorization", authCode)
