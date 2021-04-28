@@ -32,17 +32,15 @@ func (this *DeviceClient) DeleteAlias(alias string) (string, error) {
 	req.Header.Add("Accept", CONTENT_TYPE_JSON)
 	resp, err := client.Do(req)
 
-	if err != nil {
-		if resp != nil {
-			resp.Body.Close()
-		}
-		return "", err
-	}
-	if resp == nil {
+	if resp != nil {
+		defer resp.Body.Close()
+	} else {
 		return "", nil
 	}
+	if err != nil {
+		return "", err
+	}
 
-	defer resp.Body.Close()
 	r, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return "", err
