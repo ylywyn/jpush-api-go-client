@@ -1,11 +1,12 @@
 package jpushclient
 
 type Option struct {
-	SendNo          int   `json:"sendno,omitempty"`
-	TimeLive        int   `json:"time_to_live,omitempty"`
-	ApnsProduction  bool  `json:"apns_production"`
-	OverrideMsgId   int64 `json:"override_msg_id,omitempty"`
-	BigPushDuration int   `json:"big_push_duration,omitempty"`
+	SendNo            int                               `json:"sendno,omitempty"`
+	TimeLive          int                               `json:"time_to_live,omitempty"`
+	ApnsProduction    bool                              `json:"apns_production"`
+	OverrideMsgId     int64                             `json:"override_msg_id,omitempty"`
+	BigPushDuration   int                               `json:"big_push_duration,omitempty"`
+	ThirdPartyChannel map[string]map[string]interface{} `json:"third_party_channel,omitempty"`
 }
 
 func (this *Option) SetSendno(no int) {
