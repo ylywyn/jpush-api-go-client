@@ -16,7 +16,7 @@ const (
 	BASE64_TABLE  = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 )
 
-var base64Coder = base64.NewEncoding(BASE64_TABLE)
+var Base64Coder = base64.NewEncoding(BASE64_TABLE)
 
 type PushClient struct {
 	MasterSecret string
@@ -27,7 +27,7 @@ type PushClient struct {
 
 func NewPushClient(secret, appKey string) *PushClient {
 	//base64
-	auth := "Basic " + base64Coder.EncodeToString([]byte(appKey+":"+secret))
+	auth := "Basic " + Base64Coder.EncodeToString([]byte(appKey+":"+secret))
 	pusher := &PushClient{secret, appKey, auth, HOST_NAME_SSL}
 	return pusher
 }
