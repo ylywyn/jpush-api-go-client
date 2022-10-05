@@ -3,72 +3,73 @@ jpush-api-go-client
 
 概述
 ----------------------------------- 
-   这是JPush REST API 的 go 版本封装开发包,仅支持最新的REST API v3功能。
-   REST API 文档：http://docs.jpush.cn/display/dev/Push-API-v3
-  
+这是JPush REST API 的 go 版本封装开发包,仅支持最新的REST API v3功能。 REST API 文档：http://docs.jpush.cn/display/dev/Push-API-v3
 
-使用  
+
+使用
 ----------------------------------- 
-   go get github.com/ylywyn/jpush-api-go-client
-   
-   
-推送流程  
+go get github.com/swordkee/jpush-api-go-client
+
+
+推送流程
 ----------------------------------- 
+
 ### 1.构建要推送的平台： jpushclient.Platform
+
 	//Platform
 	var pf jpushclient.Platform
-	pf.Add(jpushclient.ANDROID)
-	pf.Add(jpushclient.IOS)
-	pf.Add(jpushclient.WINPHONE)
+	pf.AddAndroid().AddQuickApp().AddIOS().AddWinPhone()
 	//pf.All()
-      
+
 ### 2.构建接收听众： jpushclient.Audience
+
 	//Audience
 	var ad jpushclient.Audience
 	s := []string{"t1", "t2", "t3"}
-	ad.SetTag(s)
 	id := []string{"1", "2", "3"}
-	ad.SetID(id)
+    ad.SetTag(s).SetAlias(s).SetTagAnd(s).SetID([]string{registrationId}).SetTagNot(s)
 	//ad.All()
-      
+
 ### 3.构建通知 jpushclient.Notice，或者消息： jpushclient.Message
-      
+
 	//Notice
 	var notice jpushclient.Notice
-	notice.SetAlert("alert_test")
-	notice.SetAndroidNotice(&jpushclient.AndroidNotice{Alert: "AndroidNotice"})
-	notice.SetIOSNotice(&jpushclient.IOSNotice{Alert: "IOSNotice"})
-	notice.SetWinPhoneNotice(&jpushclient.WinPhoneNotice{Alert: "WinPhoneNotice"})
+	notice.SetAlert("alert_test").
+	    SetAndroidNotice(&jpushclient.AndroidNotice{Alert: "AndroidNotice"}).
+	    SetIOSNotice(&jpushclient.IOSNotice{Alert: "IOSNotice"}).
+	    SetQuickAppNotice(&QuickAppNotice{Alert: "QuickAppNotice",Title: "test",Page: "/page"}).
+	    SetWinPhoneNotice(&jpushclient.WinPhoneNotice{Alert: "WinPhoneNotice"})
       
     //jpushclient.Message
     var msg jpushclient.Message
-	msg.Title = "Hello"
-	msg.Content = "你是ylywn"
-      
+	msg.SetTitle("Hello").SetMsgContent("test")
+
 ### 4.构建jpushclient.PayLoad
-    payload := jpushclient.NewPushPayLoad()
-	payload.SetPlatform(&pf)
-	payload.SetAudience(&ad)
-	payload.SetMessage(&msg)
-	payload.SetNotice(&notice)
-      
-      
+
+    req := NewPushRequest()
+	req.SetPlatform(&pf).
+	    SetAudience(&ad).
+	    SetMessage(&msg).
+	    SetNotice(&notice).
+	    SetOptions(&op)
+
 ### 5.构建PushClient，发出推送
-	c := jpushclient.NewPushClient(secret, appKey)
-	r, err := c.Send(bytes)
+
+	client := jpushclient.NewClient(secret, appKey)
+	result, err := client.Push(req)
 	if err != nil {
 		fmt.Printf("err:%s", err.Error())
 	} else {
 		fmt.Printf("ok:%s", r)
 	}
 
-  
 ### 6.完整demo
+
     package main
 
 	import (
 		"fmt"
-		"github.com/ylywyn/jpush-api-go-client"
+		"github.com/swordkee/jpush-api-go-client"
 	)
 
 	const (
@@ -80,46 +81,43 @@ jpush-api-go-client
 
 		//Platform
 		var pf jpushclient.Platform
-		pf.Add(jpushclient.ANDROID)
-		pf.Add(jpushclient.IOS)
-		pf.Add(jpushclient.WINPHONE)
+		pf.AddAndroid().AddQuickApp().AddIOS().AddWinPhone()
 		//pf.All()
 
 		//Audience
 		var ad jpushclient.Audience
 		s := []string{"1", "2", "3"}
-		ad.SetTag(s)
-		ad.SetAlias(s)
-		ad.SetID(s)
+		ad.SetTag(s).SetAlias(s).SetTagAnd(s).SetID([]string{registrationId}).SetTagNot(s)
 		//ad.All()
 
 		//Notice
 		var notice jpushclient.Notice
-		notice.SetAlert("alert_test")
-		notice.SetAndroidNotice(&jpushclient.AndroidNotice{Alert: "AndroidNotice"})
-		notice.SetIOSNotice(&jpushclient.IOSNotice{Alert: "IOSNotice"})
-		notice.SetWinPhoneNotice(&jpushclient.WinPhoneNotice{Alert: "WinPhoneNotice"})
+		notice.SetAlert("alert_test").
+		    SetAndroidNotice(&jpushclient.AndroidNotice{Alert: "AndroidNotice"}).
+		    SetIOSNotice(&jpushclient.IOSNotice{Alert: "IOSNotice"}).
+                SetQuickAppNotice(&QuickAppNotice{Alert: "QuickAppNotice",Title: "test",Page: "/page"}).
+		    SetWinPhoneNotice(&jpushclient.WinPhoneNotice{Alert: "WinPhoneNotice"})
 
 		var msg jpushclient.Message
-		msg.Title = "Hello"
-		msg.Content = "你是ylywn"
+		msg.SetTitle("Hello").SetMsgContent("test")
 
-		payload := jpushclient.NewPushPayLoad()
-		payload.SetPlatform(&pf)
-		payload.SetAudience(&ad)
-		payload.SetMessage(&msg)
-		payload.SetNotice(&notice)
+		req := NewPushRequest()
+            req.SetPlatform(&pf).
+	            SetAudience(&ad).
+	            SetMessage(&msg).
+	            SetNotice(&notice).
+                SetOptions(&op)
 
-		bytes, _ := payload.ToBytes()
-		fmt.Printf("%s\r\n", string(bytes))
+		str, _ := req.ToJson()
+		fmt.Printf("%s\r\n", str)
 
 		//push
-		c := jpushclient.NewPushClient(secret, appKey)
-		str, err := c.Send(bytes)
+		c := jpushclient.NewClient(secret, appKey)
+		result, err := c.Push(req)
 		if err != nil {
 			fmt.Printf("err:%s", err.Error())
 		} else {
-			fmt.Printf("ok:%s", str)
+			fmt.Printf("ok:%s", result)
 		}
 	}
 
