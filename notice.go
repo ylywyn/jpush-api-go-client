@@ -8,16 +8,18 @@ type Notice struct {
 }
 
 type AndroidNotice struct {
-	Alert     string                 `json:"alert"`
-	Title     string                 `json:"title,omitempty"`
-	BuilderId int                    `json:"builder_id,omitempty"`
-	Extras    map[string]interface{} `json:"extras,omitempty"`
+	Alert       string                 `json:"alert"`
+	Title       string                 `json:"title,omitempty"`
+	BuilderId   int                    `json:"builder_id,omitempty"`
+	BadgeAddNum int                    `json:"badge_add_num,omitempty"`
+	BadgeClass  string                 `json:"badge_class,omitempty"`
+	Extras      map[string]interface{} `json:"extras,omitempty"`
 }
 
 type IOSNotice struct {
 	Alert            interface{}            `json:"alert"`
 	Sound            string                 `json:"sound,omitempty"`
-	Badge            string                 `json:"badge,omitempty"`
+	Badge            int                    `json:"badge,omitempty"`
 	ContentAvailable bool                   `json:"content-available,omitempty"`
 	MutableContent   bool                   `json:"mutable-content,omitempty"`
 	Category         string                 `json:"category,omitempty"`
