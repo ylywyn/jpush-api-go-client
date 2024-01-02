@@ -32,7 +32,7 @@ func getMsg() *PushRequest {
 		SetAndroidNotice(&AndroidNotice{Alert: "AndroidNotice1111111", Title: "testi1111"}).
 		SetIOSNotice(&IOSNotice{Alert: "IOSNotice"}).
 		SetQuickAppNotice(&QuickAppNotice{Alert: "QuickAppNotice", Title: "test", Page: "/page"}).
-		SetWinPhoneNotice(&WinPhoneNotice{Alert: "WinPhoneNotice"})
+		SetVOIPNotice(&VOIPNotice{Key: "VOIPNotice"})
 	log.Println(notice.ToJson())
 
 	var notice3rd Notice3rd

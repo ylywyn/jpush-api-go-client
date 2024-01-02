@@ -59,16 +59,16 @@ func (s *ScheduleRequest) PeriodicalTrigger(start, end time.Time, timeUnit strin
 	}
 }
 
-func (this *ScheduleRequest) ToJson() (string, error) {
-	content, err := json.Marshal(this)
+func (s *ScheduleRequest) ToJson() (string, error) {
+	content, err := json.Marshal(s)
 	if err != nil {
 		return "", err
 	}
 	return string(content), nil
 }
 
-func (this *ScheduleRequest) ToBytes() ([]byte, error) {
-	content, err := json.Marshal(this)
+func (s *ScheduleRequest) ToBytes() ([]byte, error) {
+	content, err := json.Marshal(s)
 	if err != nil {
 		return nil, err
 	}

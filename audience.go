@@ -3,13 +3,14 @@ package jpushclient
 import "encoding/json"
 
 const (
-	TAG     = "tag"
-	TAGAND  = "tag_and"
-	TAGNOT  = "tag_not"
-	ALIAS   = "alias"
-	ID      = "registration_id"
-	SEGMENT = "segment"
-	ABTEST  = "abtest"
+	TAG            = "tag"
+	TAGAND         = "tag_and"
+	TAGNOT         = "tag_not"
+	ALIAS          = "alias"
+	ID             = "registration_id"
+	SEGMENT        = "segment"
+	ABTEST         = "abtest"
+	LiveActivityId = "live_activity_id"
 )
 
 type Audience struct {
@@ -17,64 +18,69 @@ type Audience struct {
 	audience map[string][]string
 }
 
-func (this *Audience) All() *Audience {
-	this.Object = "all"
-	return this
+func (a *Audience) All() *Audience {
+	a.Object = "all"
+	return a
 }
 
-func (this *Audience) SetID(ids []string) *Audience {
-	this.set(ID, ids)
-	return this
+func (a *Audience) SetID(ids []string) *Audience {
+	a.set(ID, ids)
+	return a
 }
 
-func (this *Audience) SetTag(tags []string) *Audience {
-	this.set(TAG, tags)
-	return this
+func (a *Audience) SetTag(tags []string) *Audience {
+	a.set(TAG, tags)
+	return a
 }
 
-func (this *Audience) SetTagAnd(tags []string) *Audience {
-	this.set(TAGAND, tags)
-	return this
+func (a *Audience) SetTagAnd(tags []string) *Audience {
+	a.set(TAGAND, tags)
+	return a
 }
 
-func (this *Audience) SetTagNot(tags []string) *Audience {
-	this.set(TAGNOT, tags)
-	return this
+func (a *Audience) SetTagNot(tags []string) *Audience {
+	a.set(TAGNOT, tags)
+	return a
 }
 
-func (this *Audience) SetAlias(alias []string) *Audience {
-	this.set(ALIAS, alias)
-	return this
+func (a *Audience) SetAlias(alias []string) *Audience {
+	a.set(ALIAS, alias)
+	return a
 }
 
-func (this *Audience) SetSegment(segment []string) *Audience {
-	this.set(SEGMENT, segment)
-	return this
+func (a *Audience) SetSegment(segment []string) *Audience {
+	a.set(SEGMENT, segment)
+	return a
 }
 
-func (this *Audience) SetABTest(abtest []string) *Audience {
-	this.set(ABTEST, abtest)
-	return this
+func (a *Audience) SetABTest(abtest []string) *Audience {
+	a.set(ABTEST, abtest)
+	return a
 }
 
-func (this *Audience) set(key string, v []string) {
-	if this.audience == nil {
-		this.audience = make(map[string][]string)
-		this.Object = this.audience
+func (a *Audience) SetLiveActivityId(liveActivityId []string) *Audience {
+	a.set(LiveActivityId, liveActivityId)
+	return a
+}
+
+func (a *Audience) set(key string, v []string) {
+	if a.audience == nil {
+		a.audience = make(map[string][]string)
+		a.Object = a.audience
 	}
-	this.audience[key] = v
+	a.audience[key] = v
 }
 
-func (this *Audience) ToJson() (string, error) {
-	content, err := json.Marshal(this)
+func (a *Audience) ToJson() (string, error) {
+	content, err := json.Marshal(a)
 	if err != nil {
 		return "", err
 	}
 	return string(content), nil
 }
 
-func (this *Audience) ToBytes() ([]byte, error) {
-	content, err := json.Marshal(this)
+func (a *Audience) ToBytes() ([]byte, error) {
+	content, err := json.Marshal(a)
 	if err != nil {
 		return nil, err
 	}

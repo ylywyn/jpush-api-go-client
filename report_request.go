@@ -8,31 +8,31 @@ type ReportStatusRequest struct {
 	Date            string   `json:"date,omitempty"`
 }
 
-func (this *ReportStatusRequest) SetMsgId(id int) *ReportStatusRequest {
-	this.MsgId = id
-	return this
+func (report *ReportStatusRequest) SetMsgId(id int) *ReportStatusRequest {
+	report.MsgId = id
+	return report
 }
 
-func (this *ReportStatusRequest) SetRegistrationIds(ids []string) *ReportStatusRequest {
-	this.RegistrationIds = ids
-	return this
+func (report *ReportStatusRequest) SetRegistrationIds(ids []string) *ReportStatusRequest {
+	report.RegistrationIds = ids
+	return report
 }
 
-func (this *ReportStatusRequest) SetDate(d string) *ReportStatusRequest {
-	this.Date = d
-	return this
+func (report *ReportStatusRequest) SetDate(d string) *ReportStatusRequest {
+	report.Date = d
+	return report
 }
 
-func (this *ReportStatusRequest) ToJson() (string, error) {
-	content, err := json.Marshal(this)
+func (report *ReportStatusRequest) ToJson() (string, error) {
+	content, err := json.Marshal(report)
 	if err != nil {
 		return "", err
 	}
 	return string(content), nil
 }
 
-func (this *ReportStatusRequest) ToBytes() ([]byte, error) {
-	content, err := json.Marshal(this)
+func (report *ReportStatusRequest) ToBytes() ([]byte, error) {
+	content, err := json.Marshal(report)
 	if err != nil {
 		return nil, err
 	}

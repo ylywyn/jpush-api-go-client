@@ -24,30 +24,30 @@ type DeviceBindTagsRequest struct {
 	Remove []string `json:"remove,omitempty"`
 }
 
-func (this *DeviceSettingRequest) SetTags(tags *DeviceSettingRequestTags) *DeviceSettingRequest {
-	this.Tags = tags
-	return this
+func (d *DeviceSettingRequest) SetTags(tags *DeviceSettingRequestTags) *DeviceSettingRequest {
+	d.Tags = tags
+	return d
 }
 
-func (this *DeviceSettingRequest) SetAlias(alias string) *DeviceSettingRequest {
-	this.Alias = alias
-	return this
+func (d *DeviceSettingRequest) SetAlias(alias string) *DeviceSettingRequest {
+	d.Alias = alias
+	return d
 }
-func (this *DeviceSettingRequest) SetMobile(mobile string) *DeviceSettingRequest {
-	this.Mobile = mobile
-	return this
+func (d *DeviceSettingRequest) SetMobile(mobile string) *DeviceSettingRequest {
+	d.Mobile = mobile
+	return d
 }
 
-func (this *DeviceSettingRequest) ToJson() (string, error) {
-	content, err := json.Marshal(this)
+func (d *DeviceSettingRequest) ToJson() (string, error) {
+	content, err := json.Marshal(d)
 	if err != nil {
 		return "", err
 	}
 	return string(content), nil
 }
 
-func (this *DeviceSettingRequest) ToBytes() ([]byte, error) {
-	content, err := json.Marshal(this)
+func (d *DeviceSettingRequest) ToBytes() ([]byte, error) {
+	content, err := json.Marshal(d)
 	if err != nil {
 		return nil, err
 	}

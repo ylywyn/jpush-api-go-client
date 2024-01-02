@@ -41,7 +41,7 @@ func (c *Client) DeviceEmptyTagsRequest(registrationId string, req *DeviceSettin
 	return resp.Bytes(), nil
 }
 
-//vip
+// GetDevicesStatus by vip
 func (c *Client) GetDevicesStatus(req []string) (map[string]interface{}, error) {
 	link := c.deviceUrl + "/v3/devices/status/"
 	params := make(map[string]interface{})
@@ -68,6 +68,7 @@ func (c *Client) GetAliasDevices(alias string, platforms []string) (map[string]i
 	}
 	return resp.Map()
 }
+
 func (c *Client) RemoveAlias(alias string, req *DeviceSettingRequestAlias) ([]byte, error) {
 	link := c.deviceUrl + "/v3/aliases/" + alias
 	params := make(map[string]interface{})

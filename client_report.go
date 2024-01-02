@@ -20,14 +20,14 @@ func (c *Client) GetReceived(msgIds []string) ([]interface{}, error) {
 }
 
 /*
-   送达统计详情（新）
-   https://docs.jiguang.cn/jpush/server/push/rest_api_v3_report/#_7
+GetReceivedDetail 送达统计详情（新）
+https://docs.jiguang.cn/jpush/server/push/rest_api_v3_report/#_7
 */
-func (c *Client) GetReceivedDetail(msgIds []string) ([]interface{}, error) {
-	if len(msgIds) == 0 {
+func (c *Client) GetReceivedDetail(ids []string) ([]interface{}, error) {
+	if len(ids) == 0 {
 		return nil, errors.New("msgIds不能为空")
 	}
-	link := c.reportUrl + "/v3/received/detail?msg_ids=" + strings.Join(msgIds, ",")
+	link := c.reportUrl + "/v3/received/detail?msg_ids=" + strings.Join(ids, ",")
 	resp, err := c.request("GET", link, nil, false)
 	if err != nil {
 		return nil, err
@@ -49,14 +49,14 @@ func (c *Client) GetMessageStatus(req *ReportStatusRequest) (map[string]interfac
 }
 
 /*
-	消息统计（VIP 专属接口，旧）
-	https://docs.jiguang.cn/jpush/server/push/rest_api_v3_report/#vip
+GetMessages 消息统计（VIP 专属接口，旧）
+https://docs.jiguang.cn/jpush/server/push/rest_api_v3_report/#vip
 */
-func (c *Client) GetMessages(msgIds []string) ([]interface{}, error) {
-	if len(msgIds) == 0 {
+func (c *Client) GetMessages(ids []string) ([]interface{}, error) {
+	if len(ids) == 0 {
 		return nil, errors.New("msgIds不能为空")
 	}
-	link := c.reportUrl + "/v3/messages?msg_ids=" + strings.Join(msgIds, ",")
+	link := c.reportUrl + "/v3/messages?msg_ids=" + strings.Join(ids, ",")
 	resp, err := c.request("GET", link, nil, false)
 	if err != nil {
 		return nil, err
@@ -65,8 +65,8 @@ func (c *Client) GetMessages(msgIds []string) ([]interface{}, error) {
 }
 
 /*
-   消息统计详情（VIP 专属接口，新）
-   https://docs.jiguang.cn/jpush/server/push/rest_api_v3_report/#vip_1
+GetMessagesDetail 消息统计详情（VIP 专属接口，新）
+https://docs.jiguang.cn/jpush/server/push/rest_api_v3_report/#vip_1
 */
 func (c *Client) GetMessagesDetail(msgIds []string) ([]interface{}, error) {
 	if len(msgIds) == 0 {
@@ -90,8 +90,8 @@ func (c *Client) GetUsers(timeUnit, start, duration string) ([]interface{}, erro
 }
 
 /*
-	分组统计-消息统计（VIP 专属接口）
-	https://docs.jiguang.cn/jpush/server/push/rest_api_v3_report/#-vip
+GetGroupMessages 分组统计-消息统计（VIP 专属接口）
+https://docs.jiguang.cn/jpush/server/push/rest_api_v3_report/#-vip
 */
 func (c *Client) GetGroupMessages(msgIds []string) ([]interface{}, error) {
 	if len(msgIds) == 0 {
@@ -106,8 +106,8 @@ func (c *Client) GetGroupMessages(msgIds []string) ([]interface{}, error) {
 }
 
 /*
-	分组统计-用户统计（VIP 专属接口）
-	https://docs.jiguang.cn/jpush/server/push/rest_api_v3_report/#-vip_1
+GetGroupUsers 分组统计-用户统计（VIP 专属接口）
+https://docs.jiguang.cn/jpush/server/push/rest_api_v3_report/#-vip_1
 */
 func (c *Client) GetGroupUsers(timeUnit, start, duration string) ([]interface{}, error) {
 	link := c.reportUrl + "/v3/group/users/time_unit=" + timeUnit + "&start" + start + "&duration" + duration

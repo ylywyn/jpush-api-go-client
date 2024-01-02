@@ -8,7 +8,6 @@ import (
 const (
 	IOS      = "ios"
 	ANDROID  = "android"
-	WINPHONE = "winphone"
 	QUICKAPP = "quickapp"
 )
 
@@ -17,16 +16,16 @@ type Platform struct {
 	osArry []string
 }
 
-func (this *Platform) All() *Platform {
-	this.Os = "all"
-	return this
+func (plat *Platform) All() *Platform {
+	plat.Os = "all"
+	return plat
 }
 
-func (this *Platform) add(os string) error {
-	if this.Os == nil {
-		this.osArry = make([]string, 0, 4)
+func (plat *Platform) add(os string) error {
+	if plat.Os == nil {
+		plat.osArry = make([]string, 0, 4)
 	} else {
-		switch this.Os.(type) {
+		switch plat.Os.(type) {
 		case string:
 			return errors.New("platform is all")
 		default:
@@ -34,7 +33,7 @@ func (this *Platform) add(os string) error {
 	}
 
 	//判断是否重复
-	for _, value := range this.osArry {
+	for _, value := range plat.osArry {
 		if os == value {
 			return nil
 		}
@@ -47,46 +46,46 @@ func (this *Platform) add(os string) error {
 		fallthrough
 	case QUICKAPP:
 		fallthrough
-	case WINPHONE:
-		this.osArry = append(this.osArry, os)
-		this.Os = this.osArry
+
 	default:
 		return errors.New("unknow platform")
 	}
-
-	return nil
 }
 
-func (this *Platform) AddIOS() *Platform {
-	this.add(IOS)
-	return this
+func (plat *Platform) AddIOS() *Platform {
+	err := plat.add(IOS)
+	if err != nil {
+		return &Platform{}
+	}
+	return plat
 }
 
-func (this *Platform) AddAndroid() *Platform {
-	this.add(ANDROID)
-	return this
+func (plat *Platform) AddAndroid() *Platform {
+	err := plat.add(ANDROID)
+	if err != nil {
+		return &Platform{}
+	}
+	return plat
 }
 
-func (this *Platform) AddWinPhone() *Platform {
-	this.add(WINPHONE)
-	return this
+func (plat *Platform) AddQuickApp() *Platform {
+	err := plat.add(QUICKAPP)
+	if err != nil {
+		return &Platform{}
+	}
+	return plat
 }
 
-func (this *Platform) AddQuickApp() *Platform {
-	this.add(QUICKAPP)
-	return this
-}
-
-func (this *Platform) ToJson() (string, error) {
-	content, err := json.Marshal(this)
+func (plat *Platform) ToJson() (string, error) {
+	content, err := json.Marshal(plat)
 	if err != nil {
 		return "", err
 	}
 	return string(content), nil
 }
 
-func (this *Platform) ToBytes() ([]byte, error) {
-	content, err := json.Marshal(this)
+func (plat *Platform) ToBytes() ([]byte, error) {
+	content, err := json.Marshal(plat)
 	if err != nil {
 		return nil, err
 	}

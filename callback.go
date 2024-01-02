@@ -8,34 +8,34 @@ type CallBack struct {
 	Params map[string]interface{} `json:"params,omitempty"`
 }
 
-func (this *CallBack) SetUrl(c string) *CallBack {
-	this.Url = c
-	return this
+func (call *CallBack) SetUrl(c string) *CallBack {
+	call.Url = c
+	return call
 }
 
-func (this *CallBack) SetType(t string) *CallBack {
-	this.Type = t
-	return this
+func (call *CallBack) SetType(t string) *CallBack {
+	call.Type = t
+	return call
 }
 
-func (this *CallBack) AddParams(key string, value interface{}) *CallBack {
-	if this.Params == nil {
-		this.Params = make(map[string]interface{})
+func (call *CallBack) AddParams(key string, value interface{}) *CallBack {
+	if call.Params == nil {
+		call.Params = make(map[string]interface{})
 	}
-	this.Params[key] = value
-	return this
+	call.Params[key] = value
+	return call
 }
 
-func (this *CallBack) ToJson() (string, error) {
-	content, err := json.Marshal(this)
+func (call *CallBack) ToJson() (string, error) {
+	content, err := json.Marshal(call)
 	if err != nil {
 		return "", err
 	}
 	return string(content), nil
 }
 
-func (this *CallBack) ToBytes() ([]byte, error) {
-	content, err := json.Marshal(this)
+func (call *CallBack) ToBytes() ([]byte, error) {
+	content, err := json.Marshal(call)
 	if err != nil {
 		return nil, err
 	}

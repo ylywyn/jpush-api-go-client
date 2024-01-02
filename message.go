@@ -9,39 +9,39 @@ type Message struct {
 	Extras      map[string]interface{} `json:"extras,omitempty"`
 }
 
-func (this *Message) SetMsgContent(c string) *Message {
-	this.MsgContent = c
-	return this
+func (msg *Message) SetMsgContent(c string) *Message {
+	msg.MsgContent = c
+	return msg
 }
 
-func (this *Message) SetTitle(title string) *Message {
-	this.Title = title
-	return this
+func (msg *Message) SetTitle(title string) *Message {
+	msg.Title = title
+	return msg
 }
 
-func (this *Message) SetContentType(t string) *Message {
-	this.ContentType = t
-	return this
+func (msg *Message) SetContentType(t string) *Message {
+	msg.ContentType = t
+	return msg
 }
 
-func (this *Message) AddExtras(key string, value interface{}) *Message {
-	if this.Extras == nil {
-		this.Extras = make(map[string]interface{})
+func (msg *Message) AddExtras(key string, value interface{}) *Message {
+	if msg.Extras == nil {
+		msg.Extras = make(map[string]interface{})
 	}
-	this.Extras[key] = value
-	return this
+	msg.Extras[key] = value
+	return msg
 }
 
-func (this *Message) ToJson() (string, error) {
-	content, err := json.Marshal(this)
+func (msg *Message) ToJson() (string, error) {
+	content, err := json.Marshal(msg)
 	if err != nil {
 		return "", err
 	}
 	return string(content), nil
 }
 
-func (this *Message) ToBytes() ([]byte, error) {
-	content, err := json.Marshal(this)
+func (msg *Message) ToBytes() ([]byte, error) {
+	content, err := json.Marshal(msg)
 	if err != nil {
 		return nil, err
 	}

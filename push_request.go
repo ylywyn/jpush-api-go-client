@@ -13,6 +13,7 @@ type PushRequest struct {
 	InAppMessage    bool        `json:"inapp_message,omitempty"`
 	SmsMessage      interface{} `json:"sms_message,omitempty"`
 	Notification3rd interface{} `json:"notification_3rd,omitempty"`
+	LiveActivity    interface{} `json:"live_Activity,omitempty"`
 	CallBack        interface{} `json:"callback,omitempty"`
 	Options         *Option     `json:"options,omitempty"`
 }
@@ -39,66 +40,69 @@ func NewPushRequest() *PushRequest {
 	pl.Options = o
 	return pl
 }
-func (this *PushRequest) SetCid(cid string) *PushRequest {
-	this.Cid = cid
-	return this
+func (push *PushRequest) SetCid(cid string) *PushRequest {
+	push.Cid = cid
+	return push
 }
 
-func (this *PushRequest) SetPlatform(pf *Platform) *PushRequest {
-	this.Platform = pf.Os
-	return this
+func (push *PushRequest) SetPlatform(pf *Platform) *PushRequest {
+	push.Platform = pf.Os
+	return push
 }
 
-func (this *PushRequest) SetAudience(ad *Audience) *PushRequest {
-	this.Audience = ad.Object
-	return this
+func (push *PushRequest) SetAudience(ad *Audience) *PushRequest {
+	push.Audience = ad.Object
+	return push
 }
 
-func (this *PushRequest) SetMessage(m *Message) *PushRequest {
-	this.Message = m
-	return this
+func (push *PushRequest) SetMessage(m *Message) *PushRequest {
+	push.Message = m
+	return push
 }
 
-func (this *PushRequest) SetInAppMessage(b bool) *PushRequest {
-	this.InAppMessage = b
-	return this
+func (push *PushRequest) SetInAppMessage(b bool) *PushRequest {
+	push.InAppMessage = b
+	return push
 }
 
-func (this *PushRequest) SetSmsMessage(m *SmsMessage) *PushRequest {
-	this.SmsMessage = m
-	return this
+func (push *PushRequest) SetSmsMessage(m *SmsMessage) *PushRequest {
+	push.SmsMessage = m
+	return push
 }
 
-func (this *PushRequest) SetNotice(notice *Notice) *PushRequest {
-	this.Notification = notice
-	return this
+func (push *PushRequest) SetNotice(notice *Notice) *PushRequest {
+	push.Notification = notice
+	return push
 }
 
-func (this *PushRequest) SetNotice3rd(notice *Notice3rd) *PushRequest {
-	this.Notification3rd = notice
-	return this
+func (push *PushRequest) SetNotice3rd(notice *Notice3rd) *PushRequest {
+	push.Notification3rd = notice
+	return push
+}
+func (push *PushRequest) SetLiveActivity(liveActivity *LiveActivity) *PushRequest {
+	push.LiveActivity = liveActivity
+	return push
+}
+func (push *PushRequest) SetCallback(callback *CallBack) *PushRequest {
+	push.CallBack = callback
+	return push
 }
 
-func (this *PushRequest) SetCallback(callback *CallBack) *PushRequest {
-	this.CallBack = callback
-	return this
+func (push *PushRequest) SetOptions(o *Option) *PushRequest {
+	push.Options = o
+	return push
 }
 
-func (this *PushRequest) SetOptions(o *Option) *PushRequest {
-	this.Options = o
-	return this
-}
-
-func (this *PushRequest) ToJson() (string, error) {
-	content, err := json.Marshal(this)
+func (push *PushRequest) ToJson() (string, error) {
+	content, err := json.Marshal(push)
 	if err != nil {
 		return "", err
 	}
 	return string(content), nil
 }
 
-func (this *PushRequest) ToBytes() ([]byte, error) {
-	content, err := json.Marshal(this)
+func (push *PushRequest) ToBytes() ([]byte, error) {
+	content, err := json.Marshal(push)
 	if err != nil {
 		return nil, err
 	}
