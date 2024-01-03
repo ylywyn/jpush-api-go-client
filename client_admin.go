@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 )
 
-func (c *Client) CreateApp(req *AdminRequest) (map[string]interface{}, error) {
+func (c *Client) CreateApp(req *AdminRequest) (map[string]any, error) {
 	link := c.adminUrl + "/v1/app"
 	buf, err := json.Marshal(req)
 	if err != nil {

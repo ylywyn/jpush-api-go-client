@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func (c *Client) GetDevices(registrationId string) (map[string]interface{}, error) {
+func (c *Client) GetDevices(registrationId string) (map[string]any, error) {
 	link := c.deviceUrl + "/v3/devices/" + registrationId
 	resp, err := c.request("GET", link, nil, false)
 	if err != nil {
@@ -42,9 +42,9 @@ func (c *Client) DeviceEmptyTagsRequest(registrationId string, req *DeviceSettin
 }
 
 // GetDevicesStatus by vip
-func (c *Client) GetDevicesStatus(req []string) (map[string]interface{}, error) {
+func (c *Client) GetDevicesStatus(req []string) (map[string]any, error) {
 	link := c.deviceUrl + "/v3/devices/status/"
-	params := make(map[string]interface{})
+	params := make(map[string]any)
 	params["registration_ids"] = req
 	buf, err := json.Marshal(params)
 	if err != nil {
@@ -57,7 +57,7 @@ func (c *Client) GetDevicesStatus(req []string) (map[string]interface{}, error) 
 	return resp.Map()
 }
 
-func (c *Client) GetAliasDevices(alias string, platforms []string) (map[string]interface{}, error) {
+func (c *Client) GetAliasDevices(alias string, platforms []string) (map[string]any, error) {
 	link := c.deviceUrl + "/v3/aliases/" + alias
 	if len(platforms) > 0 {
 		link += "?platform=" + strings.Join(platforms, ",")
@@ -71,7 +71,7 @@ func (c *Client) GetAliasDevices(alias string, platforms []string) (map[string]i
 
 func (c *Client) RemoveAlias(alias string, req *DeviceSettingRequestAlias) ([]byte, error) {
 	link := c.deviceUrl + "/v3/aliases/" + alias
-	params := make(map[string]interface{})
+	params := make(map[string]any)
 	params["registration_ids"] = req
 	buf, err := json.Marshal(params)
 	if err != nil {
@@ -93,7 +93,7 @@ func (c *Client) DeleteAlias(alias string) ([]byte, error) {
 	return resp.Bytes(), nil
 }
 
-func (c *Client) GetTags() (map[string]interface{}, error) {
+func (c *Client) GetTags() (map[string]any, error) {
 	link := c.deviceUrl + "/v3/tags/"
 	resp, err := c.request("GET", link, nil, false)
 	if err != nil {
@@ -102,7 +102,7 @@ func (c *Client) GetTags() (map[string]interface{}, error) {
 	return resp.Map()
 }
 
-func (c *Client) IsDeviceInTag(tag, registrationId string) (map[string]interface{}, error) {
+func (c *Client) IsDeviceInTag(tag, registrationId string) (map[string]any, error) {
 	link := c.deviceUrl + "/v3/tags/" + tag + "/registration_ids/" + registrationId
 	resp, err := c.request("GET", link, nil, false)
 	if err != nil {
@@ -113,7 +113,7 @@ func (c *Client) IsDeviceInTag(tag, registrationId string) (map[string]interface
 
 func (c *Client) UpdateTag(tag string, req *DeviceBindTagsRequest) ([]byte, error) {
 	link := c.deviceUrl + "/v3/tags/" + tag
-	params := make(map[string]interface{})
+	params := make(map[string]any)
 	params["registration_ids"] = req
 	buf, err := json.Marshal(params)
 	if err != nil {

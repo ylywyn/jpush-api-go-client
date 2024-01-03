@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 )
 
-func (c *Client) AddImageUrl(req *ImageRequest) (map[string]interface{}, error) {
+func (c *Client) AddImageUrl(req *ImageRequest) (map[string]any, error) {
 	link := c.imageUrl + "/byurls"
 	buf, err := json.Marshal(req)
 	if err != nil {
@@ -18,7 +18,7 @@ func (c *Client) AddImageUrl(req *ImageRequest) (map[string]interface{}, error) 
 	return resp.Map()
 }
 
-func (c *Client) UpdateImageUrl(mediaId string, req *ImageRequest) (map[string]interface{}, error) {
+func (c *Client) UpdateImageUrl(mediaId string, req *ImageRequest) (map[string]any, error) {
 	link := c.imageUrl + "/byurls/" + mediaId
 	buf, err := json.Marshal(req)
 	if err != nil {

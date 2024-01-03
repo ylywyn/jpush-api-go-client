@@ -3,7 +3,7 @@ jpush-api-go-client
 
 概述
 ----------------------------------- 
-这是JPush REST API 的 go 版本封装开发包,仅支持最新的REST API v3功能。 REST API 文档：http://docs.jpush.cn/display/dev/Push-API-v3
+这是JPush REST API 的 go 版本封装开发包,仅支持最新的REST API v3功能，最近更新：2023-10-30。REST API 文档：http://docs.jpush.cn/display/dev/Push-API-v3
 
 
 使用
@@ -37,8 +37,7 @@ go get github.com/swordkee/jpush-api-go-client
 	notice.SetAlert("alert_test").
 	    SetAndroidNotice(&jpushclient.AndroidNotice{Alert: "AndroidNotice"}).
 	    SetIOSNotice(&jpushclient.IOSNotice{Alert: "IOSNotice"}).
-	    SetQuickAppNotice(&QuickAppNotice{Alert: "QuickAppNotice",Title: "test",Page: "/page"}).
-	    SetWinPhoneNotice(&jpushclient.WinPhoneNotice{Alert: "WinPhoneNotice"})
+	    SetQuickAppNotice(&QuickAppNotice{Alert: "QuickAppNotice",Title: "test",Page: "/page"})
       
     //jpushclient.Message
     var msg jpushclient.Message
@@ -95,8 +94,7 @@ go get github.com/swordkee/jpush-api-go-client
 		notice.SetAlert("alert_test").
 		    SetAndroidNotice(&jpushclient.AndroidNotice{Alert: "AndroidNotice"}).
 		    SetIOSNotice(&jpushclient.IOSNotice{Alert: "IOSNotice"}).
-                SetQuickAppNotice(&QuickAppNotice{Alert: "QuickAppNotice",Title: "test",Page: "/page"}).
-		    SetWinPhoneNotice(&jpushclient.WinPhoneNotice{Alert: "WinPhoneNotice"})
+                SetQuickAppNotice(&QuickAppNotice{Alert: "QuickAppNotice",Title: "test",Page: "/page"})
 
 		var msg jpushclient.Message
 		msg.SetTitle("Hello").SetMsgContent("test")

@@ -3,10 +3,10 @@ package jpushclient
 import "encoding/json"
 
 type LiveActivity struct {
-	Event        string                 `json:"event"`
-	ContentState map[string]interface{} `json:"content-state"`
-	Alert        Alert                  `json:"alert,omitempty"`
-	BadgeAddNum  int                    `json:"dismissal-date,omitempty"`
+	Event        string         `json:"event"`
+	ContentState map[string]any `json:"content-state"`
+	Alert        Alert          `json:"alert,omitempty"`
+	BadgeAddNum  int            `json:"dismissal-date,omitempty"`
 }
 type Alert struct {
 	Title string `json:"title,omitempty"`
@@ -24,9 +24,9 @@ func (a *LiveActivity) SetBadgeAddNum(b int) *LiveActivity {
 	return a
 }
 
-func (a *LiveActivity) AddContentState(key string, value interface{}) *LiveActivity {
+func (a *LiveActivity) AddContentState(key string, value any) *LiveActivity {
 	if a.ContentState == nil {
-		a.ContentState = make(map[string]interface{})
+		a.ContentState = make(map[string]any)
 	}
 	a.ContentState[key] = value
 	return a

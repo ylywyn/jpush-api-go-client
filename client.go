@@ -65,14 +65,14 @@ func (c *Client) request(method, link string, body io.Reader, isGroup bool) (*Re
 	}
 	return &Response{data: buf}, nil
 }
-func (res *Response) Array() ([]interface{}, error) {
-	list := make([]interface{}, 0)
+func (res *Response) Array() ([]any, error) {
+	list := make([]any, 0)
 	err := json.Unmarshal(res.data, &list)
 	return list, err
 }
 
-func (res *Response) Map() (map[string]interface{}, error) {
-	result := make(map[string]interface{})
+func (res *Response) Map() (map[string]any, error) {
+	result := make(map[string]any)
 	err := json.Unmarshal(res.data, &result)
 	return result, err
 }

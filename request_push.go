@@ -5,17 +5,17 @@ import (
 )
 
 type PushRequest struct {
-	Cid             string      `json:"cid,omitempty"`
-	Platform        interface{} `json:"platform"`
-	Audience        interface{} `json:"audience"`
-	Notification    interface{} `json:"notification,omitempty"`
-	Message         interface{} `json:"message,omitempty"`
-	InAppMessage    bool        `json:"inapp_message,omitempty"`
-	SmsMessage      interface{} `json:"sms_message,omitempty"`
-	Notification3rd interface{} `json:"notification_3rd,omitempty"`
-	LiveActivity    interface{} `json:"live_Activity,omitempty"`
-	CallBack        interface{} `json:"callback,omitempty"`
-	Options         *Option     `json:"options,omitempty"`
+	Cid             string  `json:"cid,omitempty"`
+	Platform        any     `json:"platform"`
+	Audience        any     `json:"audience"`
+	Notification    any     `json:"notification,omitempty"`
+	Message         any     `json:"message,omitempty"`
+	InAppMessage    bool    `json:"inapp_message,omitempty"`
+	SmsMessage      any     `json:"sms_message,omitempty"`
+	Notification3rd any     `json:"notification_3rd,omitempty"`
+	LiveActivity    any     `json:"live_Activity,omitempty"`
+	CallBack        any     `json:"callback,omitempty"`
+	Options         *Option `json:"options,omitempty"`
 }
 
 type PushSingleRequest struct {

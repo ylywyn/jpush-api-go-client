@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-func (c *Client) Push(push *PushRequest) (map[string]interface{}, error) {
+func (c *Client) Push(push *PushRequest) (map[string]any, error) {
 	link := c.pushUrl + "/v3/push"
 	buf, err := json.Marshal(push)
 	if err != nil {
@@ -19,7 +19,7 @@ func (c *Client) Push(push *PushRequest) (map[string]interface{}, error) {
 	return resp.Map()
 }
 
-func (c *Client) GetCidPool(count int, cidType string) (map[string]interface{}, error) {
+func (c *Client) GetCidPool(count int, cidType string) (map[string]any, error) {
 	link := c.pushUrl + "/v3/push/cid?"
 	if count > 0 {
 		link += "count=" + strconv.Itoa(count)
@@ -34,7 +34,7 @@ func (c *Client) GetCidPool(count int, cidType string) (map[string]interface{}, 
 	return resp.Map()
 }
 
-func (c *Client) GroupPush(push *PushRequest) (map[string]interface{}, error) {
+func (c *Client) GroupPush(push *PushRequest) (map[string]any, error) {
 	link := c.pushUrl + "/v3/grouppush"
 	buf, err := json.Marshal(push)
 	if err != nil {
@@ -47,7 +47,7 @@ func (c *Client) GroupPush(push *PushRequest) (map[string]interface{}, error) {
 	return resp.Map()
 }
 
-func (c *Client) Validate(req *PushRequest) (map[string]interface{}, error) {
+func (c *Client) Validate(req *PushRequest) (map[string]any, error) {
 	link := c.pushUrl + "/v3/push/validate"
 	buf, err := json.Marshal(req)
 	if err != nil {
@@ -60,7 +60,7 @@ func (c *Client) Validate(req *PushRequest) (map[string]interface{}, error) {
 	return resp.Map()
 }
 
-func (c *Client) BatchPushByRegId(push *PushSingleRequest) (map[string]interface{}, error) {
+func (c *Client) BatchPushByRegId(push *PushSingleRequest) (map[string]any, error) {
 	link := c.pushUrl + "/v3/push/batch/regid/single"
 	buf, err := json.Marshal(push)
 	if err != nil {
@@ -73,7 +73,7 @@ func (c *Client) BatchPushByRegId(push *PushSingleRequest) (map[string]interface
 	return resp.Map()
 }
 
-func (c *Client) BatchPushByAlias(push *PushSingleRequest) (map[string]interface{}, error) {
+func (c *Client) BatchPushByAlias(push *PushSingleRequest) (map[string]any, error) {
 	link := c.pushUrl + "/v3/push/batch/alias/single"
 	buf, err := json.Marshal(push)
 	if err != nil {

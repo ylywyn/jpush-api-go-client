@@ -1,6 +1,6 @@
 package jpushclient
 
-func (c *Client) QueryEffectFiles() (map[string]interface{}, error) {
+func (c *Client) QueryEffectFiles() (map[string]any, error) {
 	link := c.pushUrl + "/v3/files"
 	resp, err := c.request("GET", link, nil, false)
 	if err != nil {
@@ -9,7 +9,7 @@ func (c *Client) QueryEffectFiles() (map[string]interface{}, error) {
 	return resp.Map()
 }
 
-func (c *Client) QueryFile(fileId string) (map[string]interface{}, error) {
+func (c *Client) QueryFile(fileId string) (map[string]any, error) {
 	link := c.pushUrl + "/v3/files/" + fileId
 	resp, err := c.request("GET", link, nil, false)
 	if err != nil {

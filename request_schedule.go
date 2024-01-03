@@ -22,12 +22,12 @@ type ScheduleTriggerSingle struct {
 }
 
 type ScheduleTriggerPeriodical struct {
-	Start     string      `json:"start,omitempty"`
-	End       string      `json:"end,omitempty"`
-	Time      string      `json:"time,omitempty"`
-	TimeUnit  string      `json:"time_unit,omitempty"`
-	Frequency int         `json:"frequency,int,omitempty"`
-	Point     interface{} `json:"point,omitempty"`
+	Start     string `json:"start,omitempty"`
+	End       string `json:"end,omitempty"`
+	Time      string `json:"time,omitempty"`
+	TimeUnit  string `json:"time_unit,omitempty"`
+	Frequency int    `json:"frequency,int,omitempty"`
+	Point     any    `json:"point,omitempty"`
 }
 
 func NewSchedule(name, cid string, enabled bool, push *PushRequest) *ScheduleRequest {

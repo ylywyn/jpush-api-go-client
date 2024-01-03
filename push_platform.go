@@ -12,7 +12,7 @@ const (
 )
 
 type Platform struct {
-	Os     interface{}
+	Os     any
 	osArry []string
 }
 

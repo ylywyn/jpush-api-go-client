@@ -11,7 +11,7 @@ var client = NewClient(os.Getenv("APP_KEY"), os.Getenv("MASTER_SECRET"))
 var registrationId = os.Getenv("REGISTRATION_ID")
 
 func getMsg() *PushRequest {
-	params := make(map[string]interface{})
+	params := make(map[string]any)
 	params["url"] = "https://www.jpush.cn"
 	var pf Platform
 	//pf.AddAndroid().AddQuickApp().AddIOS().AddWinPhone()
