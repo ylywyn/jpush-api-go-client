@@ -3,10 +3,10 @@ package jpushclient
 import "encoding/json"
 
 type Message struct {
-	MsgContent  string                 `json:"msg_content"`
-	Title       string                 `json:"title,omitempty"`
-	ContentType string                 `json:"content_type,omitempty"`
-	Extras      map[string]interface{} `json:"extras,omitempty"`
+	MsgContent  string                 `json:"msg_content"`            // 消息内容本身
+	Title       string                 `json:"title,omitempty"`        // 消息标题
+	ContentType string                 `json:"content_type,omitempty"` // 消息内容类型
+	Extras      map[string]interface{} `json:"extras,omitempty"`       // JSON 格式的可选参数
 }
 
 func (msg *Message) SetMsgContent(c string) *Message {
