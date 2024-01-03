@@ -3,9 +3,9 @@ package jpushclient
 import "encoding/json"
 
 type AdminRequest struct {
-	AppName        string `json:"app_name,string"`
-	AndroidPackage string `json:"android_package,string"`
-	GroupName      string `json:"group_name,string"`
+	AppName        string `json:"app_name"`
+	AndroidPackage string `json:"android_package,omitempty"`
+	GroupName      string `json:"group_name,omitempty"`
 }
 
 func (a *AdminRequest) SetAppName(t string) *AdminRequest {

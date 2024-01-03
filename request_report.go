@@ -3,7 +3,7 @@ package jpushclient
 import "encoding/json"
 
 type ReportStatusRequest struct {
-	MsgId           int      `json:"msg_id,int"`
+	MsgId           int      `json:"msg_id"`
 	RegistrationIds []string `json:"registration_ids"`
 	Date            string   `json:"date,omitempty"`
 }
